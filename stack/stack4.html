@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                #include < stdbool.h>
+                
+                struct Node
+                {
+                    char data;
+                    struct Node *next;
+                };
+                
+                struct Node *top = NULL;
+                const int MAX_CAPACITY = 100; // maximum capacity
+                
+                bool is_empt()
+                {
+                    return (top == NULL);
+                }
+                
+                bool is_fl()
+                {
+                    struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+                    if (temp == NULL)
+                    {
+                        return true;
+                    }
+                    free(temp);
+                    return false;
+                }
+                
+                void push(char value)
+                {
+                    if (is_full())
+                    {
+                        printf("Stack is full. Cannot push %c.\n", value);
+                        return;
+                    }
+                    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+                    if (newNode == NULL) // no memory allocated
+                    {
+                        printf("Memory allocation failed. Cannot push %c.\n", value);
+                        return;
+                    }
+                    newNode->data = value;
+                    newNode->next = top; // update top
+                    top = newNode;
+                    printf("%c pushed onto the stack.\n", value);
+                }
+                
+                char pop()
+                {
+                    if (is_empt())
+                    {
+                        printf("Stack is empty. Cannot pop.\n");
+                        return '\0';
+                    }
+                    struct Node *del_nd = top;
+                    char del_val = del_nd->data;
+                    top = del_nd->next;
+                    free(del_nd);
+                    return del_val;
+                }
+                
+                char peek()
+                {
+                    if (is_empt())
+                    {
+                        printf("Stack is empty. No element to peek.\n");
+                        return '\0';
+                    }
+                    return top->data;
+                }
+                
+                void cleanUp()
+                {
+                    while (!is_empt())
+                    {
+                        pop();
+                    }
+                }
+                
+                int main()
+                {
+                    int choice;
+                    char value;
+                
+                    while (1)
+                    {
+                        printf("Operations you can select are given below:\n");
+                        printf("1. Push\n");
+                        printf("2. Pop\n");
+                        printf("3. Peek\n");
+                        printf("4. is empty\n");
+                        printf("5. is full\n");
+                        ;
+                        printf("6. terminate the program\n");
+                
+                        printf("Enter your choice: ");
+                        scanf("%d", &choice);
+                
+                        switch (choice)
+                        {
+                        case 1:
+                            printf("Enter the character to push: ");
+                            scanf(" %c", &value);
+                            push(value);
+                            break;
+                        case 2:
+                            printf("Deleted character : %c\n", pop());
+                            break;
+                        case 3:
+                            printf("Character at top : %c\n", peek());
+                            break;
+                        case 4:
+                            printf("is_empty? %s\n", is_empt() ? "Yes" : "No");
+                            // conditional (ternary) operator
+                            // if the stack is empty, it will print "Is the stack empty? Yes",
+                            // and if the stack is not empty, it will print "Is the stack empty? No".
+                            break;
+                        case 5:
+                            printf("is_full? %s\n", is_fl() ? "Yes" : "No");
+                            break;
+                        case 6:
+                            cleanUp();
+                            exit(0);
+                            // means : -
+                            // it immediately ends the execution of the program at the point where it's called
+                        default:
+                            printf("Invalid choice. Please enter a valid option.\n");
+                        }
+                    }
+                
+                    return 0;
+                }           
+        </code>
+    </pre>
+</body>
+</html>

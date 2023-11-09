@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                #include < ctype.h>
+                
+                #define MAX_SIZE 100
+                
+                // Structure to represent a stack
+                struct Stack {
+                    int top;
+                    int items[MAX_SIZE];
+                };
+                
+                // Function to initialize an empty stack
+                void initialize(struct Stack *s) {
+                    s->top = -1;
+                }
+                
+                // Function to check if the stack is empty
+                int isEmpty(struct Stack *s) {
+                    return (s->top == -1);
+                }
+                
+                // Function to push an element onto the stack
+                void push(struct Stack *s, int value) {
+                    if (s->top == MAX_SIZE - 1) {
+                        printf("Stack overflow\n");
+                        exit(EXIT_FAILURE);
+                    }
+                    s->items[++(s->top)] = value;
+                }
+                
+                // Function to pop an element from the stack
+                int pop(struct Stack *s) {
+                    if (isEmpty(s)) {
+                        printf("Stack underflow\n");
+                        exit(EXIT_FAILURE);
+                    }
+                    return s->items[(s->top)--];
+                }
+                
+                // Function to evaluate a prefix expression
+                int evaluatePrefix(char expression[]) {
+                    struct Stack operandStack;
+                    initialize(&operandStack);
+                
+                    int i, operand, len;
+                
+                    len = strlen(expression);
+                
+                    for (i = len - 1; i >= 0; i--) {
+                        if (isdigit(expression[i])) {
+                            operand = expression[i] - '0';
+                            push(&operandStack, operand);
+                        } else if (expression[i] == ' ' || expression[i] == '\t') {
+                            // Ignore whitespace
+                            continue;
+                        } else {
+                            // Operator encountered
+                            int operand1 = pop(&operandStack);
+                            int operand2 = pop(&operandStack);
+                
+                            switch (expression[i]) {
+                                case '+':
+                                    push(&operandStack, operand1 + operand2);
+                                    break;
+                                case '-':
+                                    push(&operandStack, operand1 - operand2);
+                                    break;
+                                case '*':
+                                    push(&operandStack, operand1 * operand2);
+                                    break;
+                                case '/':
+                                    push(&operandStack, operand1 / operand2);
+                                    break;
+                                default:
+                                    printf("Invalid operator\n");
+                                    exit(EXIT_FAILURE);
+                            }
+                        }
+                    }
+                
+                    // Result is the top of the operand stack
+                    return pop(&operandStack);
+                }
+                
+                int main() {
+                    char expression[100];
+                
+                    // Input the prefix expression
+                    printf("Enter the prefix expression: ");
+                    fgets(expression, sizeof(expression), stdin);
+                
+                    // Evaluate the prefix expression
+                    int result = evaluatePrefix(expression);
+                
+                    // Print the result
+                    printf("Result: %d\n", result);
+                
+                    return 0;
+                }
+                         
+        </code>
+    </pre>
+</body>
+</html>

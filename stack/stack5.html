@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                
+                #define MAX_LENGTH 100
+                
+                int top = -1;           // top pointer
+                char input[MAX_LENGTH]; // character array
+                
+                int isEmpty()
+                {
+                    return (top == -1);
+                }
+                
+                int isFull()
+                {
+                    return (top == MAX_LENGTH - 1);
+                }
+                
+                void push(char value)
+                {
+                    if (!isFull())
+                    {
+                        input[++top] = value;
+                    }
+                }
+                
+                char pop()
+                {
+                    if (!isEmpty())
+                    {
+                        return input[top--];
+                    }
+                    return '\0'; // Return null character if the stack is empty
+                }
+                
+                void main()
+                {
+                    char input[MAX_LENGTH];
+                    char reversed[MAX_LENGTH];
+                    int i,index=0,len;
+                
+                    printf("Enter a string: ");
+                    gets(input);
+                    //length of string
+                    for ( i = 0; input[i]!='\0'; i++)
+                    {
+                        len++;
+                    }
+                    
+                    // Push characters into the stack
+                    for (i = 0; i < len; i++)
+                    {
+                        push(input[i]);
+                    }
+                
+                    // Pop characters from the stack to reverse the string
+                    while (!isEmpty())
+                    {
+                        reversed[index] = pop();
+                        //store the value from end to start
+                        index++;
+                        //increment to stroge next value in next location
+                    }
+                    reversed[index] = '\0'; //we have to do it manually because the program willnot copy 
+                    //null character
+                    // and lest us know that string here is ended
+                
+                    printf("Reversed string: %s\n", reversed);
+                }             
+        </code>
+    </pre>
+</body>
+</html>

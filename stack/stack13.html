@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                
+                // Structure to represent a stack
+                struct Stack {
+                    int top;
+                    unsigned capacity;
+                    int *array;
+                };
+                
+                // Function to create a stack of a given capacity
+                struct Stack* createStack(unsigned capacity) {
+                    struct Stack* stack = (struct Stack*)malloc(sizeof(struct Stack));
+                    stack->capacity = capacity;
+                    stack->top = -1;
+                    stack->array = (int*)malloc(stack->capacity * sizeof(int));
+                    return stack;
+                }
+                
+                // Function to check if the stack is empty
+                int isEmpty(struct Stack* stack) {
+                    return stack->top == -1;
+                }
+                
+                // Function to push an item onto the stack
+                void push(struct Stack* stack, int item) {
+                    if (stack->top == stack->capacity - 1) {
+                        printf("Stack overflow\n");
+                        exit(EXIT_FAILURE);
+                    }
+                    stack->array[++stack->top] = item;
+                }
+                
+                // Function to pop an item from the stack
+                int pop(struct Stack* stack) {
+                    if (isEmpty(stack)) {
+                        printf("Stack underflow\n");
+                        exit(EXIT_FAILURE);
+                    }
+                    return stack->array[stack->top--];
+                }
+                
+                // Function to move a disk from source to destination
+                void moveDisk(char source, char destination, int disk) {
+                    printf("Move disk %d from %c to %c\n", disk, source, destination);
+                }
+                
+                // Function to implement the iterative Tower of Hanoi
+                void iterativeHanoi(int numDisks, struct Stack* source, struct Stack* auxiliary, struct Stack* destination) {
+                    int totalMoves = (1 << numDisks) - 1;  // Total number of moves = 2^n - 1
+                
+                    char temp;
+                
+                    // Determine the auxiliary rod based on the number of disks
+                    if (numDisks % 2 == 0) {
+                        temp = auxiliary;
+                        auxiliary = destination;
+                        destination = temp;
+                    }
+                
+                    // Populate the source stack with disks
+                    for (int i = numDisks; i >= 1; i--) {
+                        push(source, i);
+                    }
+                
+                    // Iterate through each move
+                    for (int move = 1; move <= totalMoves; move++) {
+                        // Determine the legal move based on the current move number
+                        if (move % 3 == 1) {
+                            moveDisk(source, destination, pop(source));
+                        } else if (move % 3 == 2) {
+                            moveDisk(source, auxiliary, pop(source));
+                        } else if (move % 3 == 0) {
+                            moveDisk(auxiliary, destination, pop(auxiliary));
+                        }
+                    }
+                }
+                
+                int main() {
+                    int numDisks;
+                
+                    // Input the number of disks
+                    printf("Enter the number of disks: ");
+                    scanf("%d", &numDisks);
+                
+                    // Create stacks for each rod
+                    struct Stack* source = createStack(numDisks);
+                    struct Stack* auxiliary = createStack(numDisks);
+                    struct Stack* destination = createStack(numDisks);
+                
+                    // Perform iterative Tower of Hanoi
+                    iterativeHanoi(numDisks, source, auxiliary, destination);
+                
+                    // Free allocated memory
+                    free(source->array);
+                    free(auxiliary->array);
+                    free(destination->array);
+                    free(source);
+                    free(auxiliary);
+                    free(destination);
+                
+                    return 0;
+                }
+                         
+        </code>
+    </pre>
+</body>
+</html>

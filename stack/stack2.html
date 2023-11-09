@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include< string.h>
+                #include < stdbool.h> //check full or empty
+                
+                #define MAX_SIZE 100
+                
+                // structure
+                struct Stack
+                {
+                    char items[MAX_SIZE];
+                    int top; // top value in stack
+                };
+                
+                // function to initialize the stack
+                // this willbe called everytime th eprogram is run from scrach
+                void initialize(struct Stack *stack)
+                {
+                    stack->top = -1; // no value
+                }
+                
+                // check if the stack is empty
+                bool isEmpty(struct Stack *stack)
+                {
+                    return (stack->top == -1);
+                }
+                
+                // check if the stack is full
+                bool isFull(struct Stack *stack)
+                {
+                    return (stack->top == MAX_SIZE - 1);
+                }
+                
+                // Function to push an element in the stack
+                void push(struct Stack *input, char value)
+                {
+                    if (isFull(input))
+                    { // function call to check if stack is full or not
+                        // it will run if condition is true
+                        printf("\n~~~~~Overflow conditon~~~~~~~~");
+                    }
+                    else
+                    {
+                        input->items[++input->top] = value;
+                        printf("\nValue %c is successfully stored",value);
+                    }
+                }
+                
+                //pop an element from the stack
+                char pop(struct Stack *stack)
+                {
+                    if (isEmpty(stack))
+                    // function call to check if stack is empty or not
+                        // it will run if condition is true
+                    {
+                        printf("Stack is empty. Cannot pop.\n");
+                        return '\0'; // return null character if stack is empty
+                    }
+                    else
+                    {
+                        return stack->items[stack->top--];//decrement
+                    }
+                }
+                
+                //get the top element of the stack (PEEK)
+                char peek(struct Stack *stack)
+                {
+                    if (isEmpty(stack))
+                    {
+                        printf("Stack is empty. No element to peek.\n");
+                        return '\0'; // return null character if stack is empty
+                    }
+                    else
+                    {
+                        return stack->items[stack->top];
+                    }
+                }
+                
+                void main()
+                {
+                    struct Stack a;
+                    initialize(&a);
+                    char get;
+                    do
+                    {
+                        printf("\n1.Push value\n2.Pop\n3.peek\n4.isEmpty\n5.isFull\n6.Terminate program");
+                        printf("\nNOTE:- There is no need for you to press enter. program will do it automatically");
+                        printf("\nEnter your choice : ");
+                        get=getche();
+                        switch (get)
+                        {
+                        case '1':
+                            printf("\nEnter character for input  : ");
+                            char value=getche();
+                            push(&a,value);
+                            break;
+                
+                        case '2':
+                            printf("Popped element: %c\n", pop(&a));
+                            break;
+                
+                        case '3':
+                            printf("Top element: %c\n", peek(&a));
+                            break;
+                
+                        case '4':
+                            isEmpty(&a) ? "Yes" : "No";
+                            break;
+                
+                        case '5':
+                        isFull(&a) ? "Yes" : "No";
+                            break;
+                        case '6':
+                        printf("Terminaiton seccssfull");
+                            break;
+                        default:
+                            printf("Enter a valid choice");
+                        }
+                    } while (get != '6');
+                }             
+        </code>
+    </pre>
+</body>
+</html>

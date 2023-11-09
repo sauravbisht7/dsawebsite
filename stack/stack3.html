@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                #include < stdbool.h>
+                
+                struct stck
+                {
+                    int data;
+                    struct stck *next;
+                };
+                
+                struct stck *top = NULL;
+                
+                bool is_empty()
+                {
+                    return (top == NULL);
+                }
+                
+                bool is_full()
+                {
+                    struct stck *temp = (struct stck *)malloc(sizeof(struct stck));
+                    // for comparison urse temp
+                    if (temp == NULL)
+                    {
+                        return true;
+                    }
+                    free(temp);
+                    return false;
+                }
+                
+                void push(int value)
+                {
+                    // take nn---->new node to insert new values
+                    struct stck *nn = (struct stck *)malloc(sizeof(struct stck));
+                    if (nn == NULL)
+                    {
+                        // no memory is free to allocate
+                        printf("Memory allocation failed. Cannot push %d.\n", value);
+                        return;
+                        // to main
+                    }
+                    // no need to use else
+                    // as if the program does not return to main
+                    // meaning memory is allocated and value will be stored
+                    nn->data = value;
+                    nn->next = top;
+                    top = nn;
+                    printf("%d pushed onto the stack.\n", value);
+                }
+                
+                int pop()
+                {
+                    if (is_empty())
+                    {
+                        printf("Stack is empty. Cannot pop.\n");
+                        return 0;
+                    }
+                    struct stck *del_nd = top;
+                    int dl_val = del_nd->data;
+                    top = del_nd->next;
+                    // update top
+                    free(del_nd);
+                    // if we don't need it, just ree the memory and update top
+                    return dl_val;
+                }
+                
+                int peek()
+                {
+                    if (is_empty())
+                    {
+                        printf("Stack is empty. No element to peek.\n");
+                        return 0;
+                    }
+                    return top->data;
+                }
+                
+                void cleanUp()
+                {
+                    while (!is_empty())
+                    {
+                        // this will work if not empty occurs
+                        // and rum while there are some content in stack
+                        pop();
+                    }
+                }
+                
+                void main()
+                {
+                    int choice, value;
+                
+                    while (1)
+                    {
+                        printf("Operations you can select are given below:\n");
+                        printf("1. Push\n");
+                        printf("2. Pop\n");
+                        printf("3. Peek\n");
+                        printf("4. is empty\n");
+                        printf("5. is full\n");
+                        ;
+                        printf("6. terminate the program\n");
+                
+                        printf("Enter your choice: ");
+                        scanf("%d", &choice);
+                
+                        switch (choice)
+                        {
+                        case 1:
+                            printf("Enter the value to push: ");
+                            scanf("%d", &value);
+                            push(value);
+                            break;
+                        case 2:
+                            printf("Deleted value is : %d\n", pop());
+                            break;
+                        case 3:
+                            printf("Element on top: %d\n", peek());
+                            break;
+                        case 4:
+                            printf("is_empty %s\n", is_empty() ? "Yes" : "No");
+                            // conditional (ternary) operator
+                            // if the stack is empty, it will print "Is the stack empty? Yes",
+                            // and if the stack is not empty, it will print "Is the stack empty? No".
+                            break;
+                        case 5:
+                            printf("is_full %s\n", is_full() ? "Yes" : "No");
+                            // similar work to above
+                            break;
+                        case 6:
+                            cleanUp();
+                            exit(0);
+                            // means : -
+                            // it immediately ends the execution of the program at the point where it's called
+                        default:
+                            printf("Invalid choice. Please select a valid option.\n");
+                        }
+                    }
+                }             
+        </code>
+    </pre>
+</body>
+</html>

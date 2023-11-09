@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                #include < string.h>
+                 
+                #define MAX_SIZE 100
+                
+                // Structure to represent a stack
+                struct Stack {
+                    int top;
+                    int items[MAX_SIZE];
+                };
+                
+                // Function to initialize an empty stack
+                void initialize(struct Stack *s) {
+                    s->top = -1;
+                }
+                
+                // Function to check if the stack is empty
+                int isEmpty(struct Stack *s) {
+                    return (s->top == -1);
+                }
+                
+                // Function to push an element onto the stack
+                void push(struct Stack *s, int value) {
+                    if (s->top == MAX_SIZE - 1) {
+                        printf("Stack overflow\n");
+                        exit(EXIT_FAILURE);
+                    }
+                    s->items[++(s->top)] = value;
+                }
+                
+                // Function to pop an element from the stack
+                int pop(struct Stack *s) {
+                    if (isEmpty(s)) {
+                        printf("Stack underflow\n");
+                        exit(EXIT_FAILURE);
+                    }
+                    return s->items[(s->top)--];
+                }
+                
+                // Function to check if the character is an operand
+                int isOperand(char c) {
+                    return (c >= '0' && c <= '9');
+                }
+                
+                // Function to evaluate a postfix expression
+                int evaluatePostfix(char postfix[]) {
+                    struct Stack operandStack;
+                    initialize(&operandStack);
+                
+                    int i, len, operand, result;
+                
+                    len = strlen(postfix);
+                
+                    // Traverse the expression from left to right
+                    for (i = 0; i < len; i++) {
+                        // If the current character is an operand, push it onto the stack
+                        if (isOperand(postfix[i])) {
+                            push(&operandStack, postfix[i] - '0');
+                        } else { // If the current character is an operator
+                            // Pop two operands from the stack
+                            int operand2 = pop(&operandStack);
+                            int operand1 = pop(&operandStack);
+                
+                            // Perform the operation based on the operator
+                            switch (postfix[i]) {
+                                case '+':
+                                    result = operand1 + operand2;
+                                    break;
+                                case '-':
+                                    result = operand1 - operand2;
+                                    break;
+                                case '*':
+                                    result = operand1 * operand2;
+                                    break;
+                                case '/':
+                                    result = operand1 / operand2;
+                                    break;
+                                default:
+                                    printf("Invalid operator\n");
+                                    exit(EXIT_FAILURE);
+                            }
+                
+                            // Push the result back onto the stack
+                            push(&operandStack, result);
+                        }
+                    }
+                
+                    // The final result will be on the top of the stack
+                    return pop(&operandStack);
+                }
+                
+                int main() {
+                    char postfix[100];
+                
+                    // Input the postfix expression
+                    printf("Enter the postfix expression: ");
+                    scanf("%s", postfix);
+                
+                    // Evaluate the postfix expression
+                    int result = evaluatePostfix(postfix);
+                
+                    // Print the result
+                    printf("Result: %d\n", result);
+                
+                    return 0;
+                }
+                      
+        </code>
+    </pre>
+</body>
+</html>

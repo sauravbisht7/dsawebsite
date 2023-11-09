@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdbool.h>
+                
+                #define MAX_SIZE 100
+                
+                int stack[MAX_SIZE];
+                int top = -1;
+                
+                bool isEmpty() {
+                    return (top == -1);
+                }
+                
+                bool isFull() {
+                    return (top == MAX_SIZE - 1);
+                }
+                
+                void push(int value) {
+                    if (!isFull()) {
+                        stack[++top] = value;
+                    }
+                }
+                
+                int pop() {
+                    if (!isEmpty()) {
+                        return stack[top--];
+                    }
+                    return -1; // Return -1 to indicate an empty stack
+                }
+                
+                int peek() {
+                    if (!isEmpty()) {
+                        return stack[top];
+                    }
+                    return -1; // Return -1 to indicate an empty stack
+                }
+                
+                // Function to sort the stack in ascending order
+                void sortStack() {
+                    int temp_stk[MAX_SIZE];
+                    int temp_top = -1;
+                
+                    while (!isEmpty()) {//while run as long as original stack is not empty
+                        int temp = pop();
+                
+                        // Move elements from tempStack to the original stack while they are greater than temp
+                        while (temp_top >= 0 && temp_stk[temp_top] > temp) {
+                            int poped = temp_stk[temp_top];
+                            temp_top--;
+                            push(poped);//push inot original stack
+                        }
+                
+                        // Push the temp value onto the tempStack
+                        temp_stk[++temp_top] = temp;//increment top as well
+                    }
+                
+                    // Move elements from tempStack back to the original stack
+                    while (temp_top >= 0) {
+                        int popped = temp_stk[temp_top--];
+                        push(popped);
+                    }
+                }
+                
+                void main() {
+                     int num, value,i;
+                
+                    printf("Enter the number of stack elements: ");
+                    scanf("%d", &num);
+                
+                    printf("Enter the stack elements:\n");
+                    for (i = 0; i < num; i++) {
+                        printf("Insert %d value : ",i+1);
+                        scanf("%d", &value);
+                        push(value);
+                    }
+                
+                    printf("Original Stack:\n");
+                    for (i = top; i >= 0; i--) {
+                        printf("%d\n", stack[i]);
+                    }
+                
+                    // Sort the stack
+                    sortStack();
+                
+                    printf("\nSorted Stack:\n");
+                    for (i = top; i >= 0; i--) {
+                        printf("%d\n", stack[i]);
+                    }
+                }              
+        </code>
+    </pre>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            
+            #include < stdio.h>
+            #include < stdbool.h>
+            
+            #define MAX_SIZE 100
+            
+            // Initialize the top pointers for each stack
+            int top1 = -1; // Top of the first stack
+            int top2 = MAX_SIZE; // Top of the second stack
+            
+            // Check if the first stack is empty
+            bool is_emt_Stack1() {
+                return (top1 == -1);
+            }
+            
+            // Check if the second stack is empty
+            bool is_emt_Stack2() {
+                return (top2 == MAX_SIZE);
+            }
+            
+            // Check if the first stack is full
+            bool is_full_Stack1() {
+                return (top1 + 1 == top2);
+            }
+            
+            // Check if the second stack is full
+            bool is_full_Stack2() {
+                return (top2 - 1 == top1);
+            }
+            
+            // Push an item onto the first stack
+            void push_s1(int item, int* stacks) {
+                if (!is_full_Stack1()) {
+                    stacks[++top1] = item;
+                }
+            }
+            
+            // Push an item onto the second stack
+            //just invert the process of push1
+            void push_s2(int item, int* stacks) {
+                if (!is_full_Stack2()) {
+                    stacks[--top2] = item;
+                }
+            }
+            
+            // Pop an item from the first stack
+            int pop_stk1(int* stacks) {
+                if (!is_emt_Stack1()) {
+                    return stacks[top1--];
+                }
+                return 0; // Return 0 to indicate an empty stack
+            }
+            
+            // Pop an item from the second stack
+            //just invert the process of stack1
+            int pop_stk2(int* stacks) {
+                if (!is_emt_Stack2()) {
+                    return stacks[top2++];
+                }
+                return 0; // Return 0 to indicate an empty stack
+            }
+            
+            int main() {
+                int combined_stck[MAX_SIZE]; // Define the local array to store the two stacks
+            
+                // Push items onto the first stack
+                push_s1(10, combined_stck);
+                push_s1(20, combined_stck);
+                push_s1(30, combined_stck);
+            
+                // Push items onto the second stack
+                push_s2(5, combined_stck);
+                push_s2(15, combined_stck);
+                //see here both the stacks are using a single array
+            
+                // Pop items from the first stack
+                printf("Pop from Stack 1: %d\n", pop_stk2(combined_stck));
+                printf("Pop from Stack 1: %d\n", pop_stk2(combined_stck));
+            
+                // Pop items from the second stack
+                printf("Pop from Stack 2: %d\n", pop_stk2(combined_stck));
+            
+                return 0;
+            }             
+        </code>
+    </pre>
+</body>
+</html>
