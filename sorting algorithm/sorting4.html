@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+      
+#include < stdio.h>
+    #include < time.h>
+    
+    // Function to perform Bubble Sort by recursion
+    void bubble_rec(int arr[], int n)
+    {
+        int i, temp;
+        if (n == 1)
+        {
+            return; // 1 element is always sorted
+        }
+    
+        // One pass of Bubble Sort to move the largest element to the end
+        for (i = 0; i < n - 1; i++)
+        {
+            if (arr[i] > arr[i + 1])
+            {
+                // Swap arr[i] and arr[i + 1]
+                temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+            }
+        }
+    
+        // Recursively sort the remaining (n-1) elements
+        // so every time it will sort 1 element
+        bubble_rec(arr, n - 1);
+    }
+    int main()
+    {
+        int i, n;
+        printf("Enter the number of elements in the array: ");
+        scanf("%d", &n);
+    
+        int arr[n];
+        printf("Enter %d integers:\n", n);
+        for (i = 0; i < n; i++)
+        {
+            scanf("%d", &arr[i]);
+        }
+    
+        // Record the start time
+        clock_t start = clock();
+    
+        // Perform Bubble Sort
+        bubble_rec(arr, n);
+    
+        // Record the end time
+        clock_t end = clock();
+    
+        printf("Sorted array using Bubble Sort(recursion):\n");
+        for (i = 0; i < n; i++)
+        {
+            printf("%d ", arr[i]);
+        }
+        printf("\n");
+    
+        // Calculate the time taken in seconds
+        double time_complexity = ((double)(end - start)) / CLOCKS_PER_SEC;
+        printf("\nTime taken: %f seconds\n", time_complexity);
+    
+        return 0;
+    }              
+        </code>
+    </pre>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                #include < stdlib.h>
+                #include < time.h>
+                
+                void insert_string(char *arr[], int n)
+                {
+                    int i, j;
+                    char *key; // to access whole string not only a character
+                    // start i=1 so that we can compare the value with j that is  ---->i -1
+                    for (i = 1; i < n; i++)
+                    {
+                        key = arr[i];
+                        j = i - 1;
+                
+                        while (j >= 0 && strcmp(arr[j], key) > 0)
+                        {
+                            arr[j + 1] = arr[j];//shifting
+                            j = j - 1;//pulling j back
+                        }
+                    //why j+1 because now it is one step back from where strins is to be inserted
+                        arr[j + 1] = key;
+                    }
+                }
+                
+                int main()
+                {
+                    int i, n = 0;
+                    printf("Enter the number of elements in the array: ");
+                    scanf("%d", &n);
+                
+                    char *arr[n]; // let's get this thing clear that this is the size of string array
+                    for (i = 0; i < n; i++)
+                    {
+                        arr[i] = (char *)malloc(100); // and here memory is allocated to the string not array
+                        printf("Enter string %d: ", i + 1);
+                        scanf("%s", arr[i]);
+                    }
+                
+                    // start time
+                    clock_t start = clock();
+                
+                    // Perform Bubble Sort
+                    insert_string(arr, n);
+                    // end time
+                    clock_t end = clock();
+                
+                    printf("Sorted array using Inseetion Sort:\n");
+                    for (i = 0; i < n; i++)
+                    {
+                        printf("%s\n ", arr[i]);
+                    }
+                
+                    // Calculate the time taken in seconds
+                    double timeTaken = ((double)(end - start)) / CLOCKS_PER_SEC;
+                    printf("\nTime taken: %f seconds\n", timeTaken);
+                
+                    // Deallocate memory for strings
+                    for (i = 0; i < n; i++)
+                    {
+                        free(arr[i]);
+                    }
+                    return 0;
+                }               
+        </code>
+    </pre>
+</body>
+</html>

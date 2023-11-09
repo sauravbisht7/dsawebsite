@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include< stdio.h>
+                #include< conio.h>
+                #include< string.h>
+                #include< time.h>
+                
+                void merge(char *arr[], int left, int mid, int right) {
+                    int i,j,k;
+                    int n1 = mid - left + 1;
+                    //size of left subarray
+                    int n2 = right - mid;
+                    // size of right subarray
+                // declare 2 array left and right
+                    char *l_ary[n1];
+                    char *r_ary[n2];
+                
+                    for (i = 0; i < n1; i++) {
+                        l_ary[i] = arr[left + i];
+                    }
+                    for (j = 0; j < n2; j++) {
+                        r_ary[j] = arr[mid + 1 + j];
+                    }
+                
+                    i = 0, j = 0, k = left;
+                
+                    while (i < n1 && j < n2) {
+                        if (strcmp(l_ary[i], r_ary[j]) <= 0) {
+                            arr[k] = l_ary[i];
+                            i++;
+                        } else {
+                            arr[k] = r_ary[j];
+                            j++;
+                        }
+                        k++;
+                    }
+                //copy let out array left
+                    while (i < n1) {
+                        arr[k] = l_ary[i];
+                        i++;
+                        k++;
+                    }
+                //copy left out array of right
+                    while (j < n2) {
+                        arr[k] = r_ary[j];
+                        j++;
+                        k++;
+                    }
+                }
+                void mr(char *arr[], int n) {
+                    int current_size;
+                    for (current_size = 1; current_size <= n - 1; current_size = 2 * current_size) {//suppose it as increment
+                        // | The outer loop controls the size of the subarrays .   
+                        // | It starts with current_size equal to 1 and doubles it in each iteration.
+                        // | The loop continues until current_size is less than or equal to n - 1.
+                
+                // now there is a question why everytime the current size is being doubled???
+                //1. when the current size is 1,it murges the element right next to it.
+                //2.In the next iteration, current_size is doubled to 2. This means 
+                //that the algorithm will merge subarrays of size 2 (previously sorted) into larger sorted subarrays of size 4.
+                
+                //this will contine until the current size is (n-1).
+                //why it checks n-1?? so that it is verified that all the elements are sorted and inserted successfully
+                //as the lenght matches
+                
+                        for (int leftStart = 0; leftStart < n - 1; leftStart += 2 * current_size) {
+                            //The inner loop is responsible for merging the subarrays. 
+                            //It starts at the beginning of the array (leftStart = 0) and increments in steps of 2 * current_size.
+                            //The purpose of this loop is to divide the array into subarrays of size current_size and merge them.
+                
+                            // here mid right and left is being calculated to send
+                            //-------------->
+                            // mid is the index of the last element in the left subarray. 
+                            // It is calculated as leftStart + current_size - 1 unless it exceeds the index of the last element in the array (n - 1).
+                            // rightEnd is the index of the last element in the right subarray .
+                            // It is calculated as leftStart + 2 * current_size - 1 unless it 
+                            // exceeds the index of the last element in the array (n - 1).
+                            int mid = (leftStart + current_size - 1) < (n - 1) ? (leftStart + current_size - 1) : (n - 1);
+                            int rightEnd = (leftStart + 2 * current_size - 1) < (n - 1) ? (leftStart + 2 * current_size - 1) : (n - 1);
+                            merge(arr, leftStart, mid, rightEnd);
+                        }
+                    }
+                }
+                int main() {
+                    int i,n;
+                    printf("Enter the number of strings: ");
+                    scanf("%d", &n);
+                
+                    char *input[n];
+                
+                    for (i = 0; i < n; i++) {
+                        input[i] = (char *)malloc(100); // Allocate memory for each string
+                        printf("Enter string %d: ", i + 1);
+                        scanf("%s", input[i]);
+                    }
+                
+                    clock_t start = clock();
+                    mergeSort(input, n);
+                    clock_t end = clock();
+                
+                    printf("Sorted strings:\n");
+                    for (i = 0; i < n; i++) {
+                        printf("%s\n", input[i]);
+                    }
+                
+                    double time_taken = (double)(end - start) / CLOCKS_PER_SEC;
+                
+                    printf("Time taken for sorting: %f seconds\n", time_taken);
+                
+                    // Deallocate memory for strings
+                    for (i = 0; i < n; i++) {
+                        free(input[i]);
+                    }
+                
+                    return 0;
+                }
+                
+                //-------------> an example of how code works:-
+                
+                //Imagine you have an array of strings like this:
+                
+                // ["banana", "apple", "cherry", "date", "fig", "grape", "blueberry"]
+                // The goal is to sort this array in ascending order using Merge Sort.
+                
+                // Initial Setup:
+                
+                // currSize starts at 1. This means we will start by considering subarrays of size 1 (adjacent elements).
+                // First Iteration:
+                
+                // currSize = 1
+                // We look at subarrays of size 1 (adjacent pairs of elements) and merge them:
+                // ["banana", "apple"], ["cherry", "date"], ["fig", "grape"], ["blueberry"]
+                // After the first iteration, the array would look like:
+                
+                // ["apple", "banana", "cherry", "date", "fig", "grape", "blueberry"]
+                // Second Iteration:
+                
+                // currSize is doubled to 2.
+                // Now we consider subarrays of size 2 and merge them:
+                // ["apple", "banana", "cherry", "date"], ["fig", "grape", "blueberry"]
+                // After the second iteration, the array would look like:
+                
+                // ["apple", "banana", "cherry", "date", "fig", "grape", "blueberry"]
+                // Third Iteration:
+                
+                // currSize is doubled to 4.
+                // Now we consider subarrays of size 4 and merge them:
+                // ["apple", "banana", "cherry", "date", "fig", "grape", "blueberry"]
+                // After the third iteration, the array would look like:
+                
+                // ["apple", "banana", "blueberry", "cherry", "date", "fig", "grape"]
+                // Final Iteration:
+                
+                // currSize is doubled to 8, which is greater than the array size (7).
+                // This means the entire array is considered as a single subarray and sorted.
+                // The final sorted array is:
+                
+                // ["apple", "banana", "blueberry", "cherry", "date", "fig", "grape"]              
+        </code>
+    </pre>
+</body>
+</html>

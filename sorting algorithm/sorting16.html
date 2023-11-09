@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                #include< stdlib.h>
+                #include< time.h>
+                
+                void swap(char **a, char **b) {
+                    //function takes two pointers to strings (pointers to char* arr[]) 
+                    //and swaps the strings they point to
+                    char *temp = *a;
+                    *a = *b;
+                    *b = temp;
+                }
+                
+                int partition(char *arr[], int low, int high) {
+                    char *pivot = arr[low]; // Use the first element as the pivot 
+                    int i = low;
+                    int j;
+                    
+                    for (j = low + 1; j <= high; j++) {
+                        //compare from 2 to end
+                        if (strcmp(arr[j], pivot) < 0) {
+                            i++;
+                            swap(&arr[i], &arr[j]);
+                            //swap i and j
+                        }
+                    }
+                    //swap the pivot itself but with actual value---->low
+                    //if it is done by pivot the change will not reflect in array
+                    swap(&arr[i], &arr[low]);
+                    return i;
+                }
+                
+                void quickSort(char *arr[], int low, int high) {
+                    if (low < high) {
+                        int partition_store = partition(arr, low, high);
+                
+                        quickSort(arr, low, partition_store - 1);
+                        quickSort(arr, partition_store + 1, high);
+                    }
+                }
+                
+                int main() {
+                
+                    int num_str;
+                    printf("Enter the number of strings: ");
+                    scanf("%d", &num_str);
+                
+                    char *arr[200]; // 
+                
+                    for (int i = 0; i < num_str; i++) {
+                        arr[i] = (char *)malloc(100); // allocate size dynamically
+                        printf("Enter string %d: ", i + 1);
+                        scanf("%s", arr[i]);
+                    }
+                
+                    printf("Unsorted array: ");
+                    for (int i = 0; i < num_str; i++) {
+                        printf("%s ", arr[i]);
+                    }
+                    clock_t start=clock();
+                    quickSort(arr, 0, num_str - 1);
+                    clock_t end=clock();
+                    printf("\nSorted array: ");
+                    for (int i = 0; i < num_str; i++) {
+                        printf("%s ", arr[i]);
+                    }
+                    double time_complexity=((double)(end-start))/CLOCKS_PER_SEC;
+                    // Free memory allocated for each string
+                    for (int i = 0; i < num_str; i++) {
+                        free(arr[i]);
+                    }
+                    printf("\nTime complexity is : %f",time_complexity);
+                
+                    return 0;
+                }            
+        </code>
+    </pre>
+</body>
+</html>

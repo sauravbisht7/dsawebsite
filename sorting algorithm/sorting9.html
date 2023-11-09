@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include< stdio.h>
+                #include< time.h>
+                int select(int ary[],int size)
+                {
+                    int i,j,min,temp;
+                    for ( i = 0; i < size-1; i++)
+                    {
+                        min=i;
+                        for ( j = i+1; j < size; j++)
+                        {
+                            if (ary[j]< ary[min])
+                            {
+                                min=j;
+                            }   
+                        }
+                        temp=ary[i];
+                        ary[i]=ary[min];
+                        ary[min]=temp;
+                        
+                    }
+                    return 0;
+                }
+                void main()
+                {
+                    int ary[10], i, count;
+                    printf("Enter your array size : ");
+                    scanf("%d", &count);
+                    for (i = 0; i < count; i++)
+                    {
+                        printf("\nEnter %d value : ", i + 1);
+                        scanf("%d", &ary[i]);
+                    }
+                    clock_t start=clock();
+                    select(ary,count);
+                    clock_t end=clock();
+                    double time_complexity=((double)(end-start))/CLOCKS_PER_SEC;
+                    for ( i = 0; i < count; i++)
+                    {
+                        printf("%d,",ary[i]);
+                    }
+                    printf("\nTime taken: %f seconds\n", time_complexity);
+                    
+                }              
+        </code>
+    </pre>
+</body>
+</html>

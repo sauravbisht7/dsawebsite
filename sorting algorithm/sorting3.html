@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < time.h>
+                
+                // Function to perform Bubble Sort
+                int bubble(int ary[], int size)
+                {
+                    int i,j,temp;
+                    for ( i = size-1; i >0; i--)
+                    {
+                        for ( j= 0; j <= i; j++)
+                        {
+                            if (ary[j]>ary[j+1])
+                            {
+                                temp=ary[j];
+                                ary[j]=ary[j+1];
+                                ary[j+1]=temp;
+                            }
+                            
+                        }
+                        
+                    }
+                    return 0;
+                    
+                }
+                
+                int main() {
+                    int i,n;
+                    printf("Enter the number of elements in the array: ");
+                    scanf("%d", &n);
+                
+                    int arr[n];
+                    printf("Enter %d integers:\n", n);
+                    for (i = 0; i < n; i++) {
+                        printf("Enter %d value : ",i+1);
+                        scanf("%d", &arr[i]);
+                    }
+                
+                    // Record the start time
+                    clock_t start = clock();
+                
+                    // Perform Bubble Sort
+                    bubble(arr, n);
+                
+                    // Record the end time
+                    clock_t end = clock();
+                
+                    printf("Sorted array using Bubble Sort:\n");
+                    for (i = 0; i < n; i++) {
+                        printf("%d ", arr[i]);
+                    }
+                    printf("\n");
+                
+                    // Calculate the time taken in seconds
+                    double timeTaken = ((double)(end - start)) / CLOCKS_PER_SEC;
+                    printf("Time taken: %f seconds\n", timeTaken);
+                
+                    return 0;
+                }              
+        </code>
+    </pre>
+</body>
+</html>

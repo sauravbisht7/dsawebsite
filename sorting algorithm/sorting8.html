@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < conio.h>
+                #include < time.h>
+                
+                int partition(int arr[], int low, int high)
+                {
+                    int pivot, temp;
+                    pivot = arr[low];
+                    int i, j;
+                    i = low + 1; // find big
+                    j = high;    // find small
+                    do
+                    {
+                        while (arr[i] <= pivot)
+                        {
+                            i++; // going forward
+                        }
+                        while (arr[j] > pivot)
+                        {
+                            j--; // going backward
+                        }
+                        if (i < j)
+                        {
+                            temp = arr[i];
+                            arr[i] = arr[j];
+                            arr[j] = temp;
+                        }
+                    } while (i < j);
+                // swap after these elements fnd positions they need
+                     temp=arr[low];
+                     arr[low]=arr[j];
+                     arr[j]=temp;
+                     return j;//the index where pivot/low settles.
+                }
+                
+                void quick_sort(int ary[], int low, int high)
+                {
+                    int partition_index; // index of pivot after partition
+                    if (low < high)
+                    {
+                        partition_index = partition(ary, low, high);
+                        quick_sort(ary, low, partition_index - 1);  // left subarray
+                        quick_sort(ary, partition_index + 1, high); // right subarray
+                    }
+                }
+                
+                void main()
+                {
+                    int ary[10], i, count;
+                    printf("Enter your array size : ");
+                    scanf("%d", &count);
+                    for (i = 0; i < count; i++)
+                    {
+                        printf("\nEnter %d value : ", i + 1);
+                        scanf("%d", &ary[i]);
+                    }
+                    clock_t start = clock();
+                    quick_sort(ary, 0, count - 1);
+                    clock_t end = clock();
+                    for (i = 0; i < count; i++)
+                    {
+                        printf("%d,", ary[i]);
+                    }
+                    double time_complexity = ((double)(end - start)) / CLOCKS_PER_SEC;
+                    printf("\nTime taken: %f seconds\n", time_complexity);
+                }                
+        </code>
+    </pre>
+</body>
+</html>
