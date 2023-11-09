@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                
+                #define MAX_SIZE 5
+                
+                char cq_dynamic[MAX_SIZE][100];
+                int front = -1, rear = -1;
+                
+                // Function to check if the circular queue is empty
+                int cq_empty() {
+                    return (front == -1);
+                }
+                
+                // Function to check if the circular queue is full
+                int cq_full() {
+                    return (front == (rear + 1) % MAX_SIZE);
+                }
+                
+                // Function to insert (enqueue) a string into the circular queue
+                void insert(char str[]) {
+                    if (cq_full()) {
+                        printf("Circular Queue is full. Cannot insert.\n");
+                    } else {
+                        if (front == -1) {//initial
+                            front = rear = 0;//update both
+                        } else {
+                            rear = (rear + 1) % MAX_SIZE; //rear 99 so,
+                            //rear+1=100 % 100->max size=0,so it goes to index 0
+                        }
+                        strcpy(cq_dynamic[rear], str);
+                        printf("Inserted: %s\n", str);
+                    }
+                }
+                
+                // Function to delete (dequeue) a string from the circular queue
+                void delete() {
+                    if (cq_empty()) {
+                        printf("Circular Queue is empty. Cannot delete.\n");
+                    } else {
+                        printf("Deleted: %s\n", cq_dynamic[front]);
+                        if (front == rear) {
+                            front = rear = -1;
+                        } else {
+                            front = (front + 1) % MAX_SIZE;//same as rear
+                        }
+                    }
+                }
+                
+                // Function to peek at the front string of the circular queue
+                char* peek() { // made pointer so that it return the first character
+                //and it will access the whole first string
+                    if (cq_empty()) {
+                        printf("Circular Queue is empty. Cannot peek.\n");
+                        return NULL;
+                    }
+                    return cq_dynamic[front];
+                }
+                
+                // Function to display the menu and get the user's choice
+                int getMenuChoice() {
+                    int choice;
+                    printf("\nMenu:\n");
+                    printf("1. Insert (Enqueue)\n");
+                    printf("2. Delete (Dequeue)\n");
+                    printf("3. Peek\n");
+                    printf("4. Check if Empty\n");
+                    printf("5. Check if Full\n");
+                    printf("6. Exit\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &choice);
+                    return choice;
+                }
+                
+                void main() {
+                    int choice;
+                    char input_string[100];
+                
+                    while (1) {
+                        choice = getMenuChoice();
+                
+                        switch (choice) {
+                            case 1:
+                                printf("Enter a string to insert into the circular queue: ");
+                                scanf("%s", input_string);
+                                insert(input_string);
+                                break;
+                            case 2:
+                                delete();
+                                break;
+                            case 3:
+                                printf("Front element: %s\n", peek());
+                                break;
+                            case 4:
+                                if (cq_empty()) {
+                                    printf("Circular Queue is empty.\n");
+                                } else {
+                                    printf("Circular Queue is not empty.\n");
+                                }
+                                break;
+                            case 5:
+                                if (cq_full()) {
+                                    printf("Circular Queue is full.\n");
+                                } else {
+                                    printf("Circular Queue is not full.\n");
+                                }
+                                break;
+                            case 6:
+                                return 0;
+                            default:
+                                printf("Invalid choice. Please try again.\n");
+                        }
+                    }
+                
+                }             
+        </code>
+    </pre>
+</body>
+</html>

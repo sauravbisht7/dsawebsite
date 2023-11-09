@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+       
+#include< stdio.h>
+    #include< conio.h>
+    int main()
+    {
+        int array1[10],i,j=0,k=2;
+        printf("Space allocation form 10 values is granted successfully for array ");
+        for ( i = 0; i < 10; i++)
+        {
+            printf("\nEnter %d value : ",i+1);
+            scanf("%d",&array1[i]);
+        }
+    
+        for ( i = 1; i < 10; i++)
+        {
+            if(array1[i]< array1[j] && array1[i]< array1[k])
+            {
+            printf("Local minima found. program successful.");
+            break;
+        }
+        }
+        if(i==9)
+        printf("No minima found");
+        
+    }
+    
+    
+    
+    OUTPUT : - 
+    
+    Space allocation form 10 values is granted successfully for array 
+    Enter 1 value : 12
+    Enter 2 value : 14
+    Enter 3 value : 34
+    Enter 4 value : 16
+    Enter 5 value : 85
+    Enter 6 value : 74
+    Enter 7 value : 32
+    Enter 8 value : 6
+    Enter 9 value : 2
+    Enter 10 value : 16
+    Local minima found. program successful.          
+        </code>
+    </pre>
+</body>
+</html>

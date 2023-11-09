@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                #include < string.h>
+                
+                struct cir_dll
+                {
+                    char data[100];
+                    struct cir_dll *prev;
+                    struct cir_dll *next;
+                };
+                
+                struct cir_dll *head = NULL;
+                
+                // is empty
+                int is_empty()
+                {
+                    return head == NULL;
+                }
+                
+                // print
+                void display()
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty.\n");
+                        return;
+                    }
+                
+                    struct cir_dll *current = head;
+                
+                    do
+                    {
+                        printf("%s -> ", current->data);
+                        current = current->next;
+                    } while (current != head);//as the link is circular so last element will point to head
+                
+                    printf("NULL\n");
+                }
+                
+                //insert at beg
+                void insert_at_begin(char value[])
+                {
+                    struct cir_dll *nn = (struct cir_dll *)malloc(sizeof(struct cir_dll));
+                    strcpy(nn->data, value);
+                
+                    if (head == NULL)//no element
+                    {
+                        head = nn;
+                        nn->next = nn;
+                        nn->prev = nn;
+                        //both element will point at first one as only 1 element exist
+                    }
+                    else
+                    {
+                        //this is already explained when we were dealing with array dll
+                        nn->next = head;
+                        nn->prev = head->prev;
+                        head->prev->next = nn;
+                        head->prev = nn;
+                        head = nn;
+                    }
+                
+                    printf("%s inserted at the beginning.\n", value);
+                }
+                
+                // Function to insert a node at a specified position
+                void insert_at_pos(char value[], int position)
+                {
+                    if (position < 1)
+                    {
+                        printf("Invalid position.\n");
+                        return;
+                    }
+                
+                    struct cir_dll *nn = (struct cir_dll *)malloc(sizeof(struct cir_dll));
+                    strcpy(nn->data, value);
+                
+                    if (head == NULL || position == 1)
+                    {
+                        insert_at_begin(value);
+                        return;
+                    }
+                
+                    struct cir_dll *current = head;
+                    int count = 1;
+                
+                    while (count < position - 1 && current->next != head)
+                    {
+                        current = current->next;
+                        count++;
+                    }
+                
+                    nn->next = current->next;
+                    nn->prev = current;
+                    current->next->prev = nn;
+                    current->next = nn;
+                
+                    printf("%s inserted at position %d.\n", value, position);
+                }
+                
+                // Function to insert a node at the end of the list
+                void insert_at_end(char value[])
+                {
+                    if (head == NULL)
+                    {
+                        insert_at_begin(value);
+                        return;
+                    }
+                
+                    struct cir_dll *nn = (struct cir_dll *)malloc(sizeof(struct cir_dll));
+                    strcpy(nn->data, value);
+                
+                    nn->next = head;
+                    nn->prev = head->prev;
+                    head->prev->next = nn;
+                    head->prev = nn;
+                
+                    printf("%s inserted at the end.\n", value);
+                }
+                
+                // Function to delete a node from the beginning of the list
+                void delete_from_start()
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    struct cir_dll *temp = head;
+                
+                    if (head->next == head)
+                    {
+                        head = NULL;
+                    }
+                    else
+                    {
+                        head->prev->next = head->next;
+                        head->next->prev = head->prev;
+                        head = head->next;
+                    }
+                
+                    free(temp);
+                    printf("Deleted from the beginning.\n");
+                }
+                
+                // Function to delete a node from the end of the list
+                void delete_from_end()
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    if (head->next == head)
+                    {
+                        free(head);
+                        head = NULL;
+                    }
+                    else
+                    {
+                        struct cir_dll *temp = head->prev;
+                        temp->prev->next = head;
+                        head->prev = temp->prev;
+                        free(temp);
+                    }
+                
+                    printf("Deleted from the end.\n");
+                }
+                
+                // Function to delete a node from a specified position
+                void delete_from_pos(int position)
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    if (position < 1)
+                    {
+                        printf("Invalid position.\n");
+                        return;
+                    }
+                
+                    if (position == 1)
+                    {
+                        delete_from_start();
+                        return;
+                    }
+                
+                    struct cir_dll *del = head;
+                    int count = 1;
+                
+                    while (count < position && del->next != head)
+                    {
+                        del = del->next;
+                        count++;
+                    }
+                
+                    if (count < position)
+                    {
+                        printf("Position not found in the list.\n");
+                        return;
+                    }
+                
+                    del->prev->next = del->next;
+                    del->next->prev = del->prev;
+                    free(del);
+                
+                    printf("Deleted from position %d.\n", position);
+                }
+                
+                // Function to search for a value in the list
+                int search(char value[100])
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Cannot search.\n");
+                        return 0;
+                    }
+                
+                    struct cir_dll *current = head;
+                    int position = 1;
+                
+                    do
+                    {
+                        if (strcmp(current->data, value) == 0)
+                        {
+                            printf("%s found at position %d.\n", value, position);
+                            return 1;
+                        }
+                        current = current->next;
+                        position++;
+                    } while (current != head);
+                
+                    printf("%s not found in the list.\n", value);
+                    return 0;
+                }
+                
+                int main()
+                {
+                    int choice;
+                    char value[100];
+                    int position;
+                
+                    while (1)
+                    {
+                        printf("\nDoubly Circular Linked List Operations:\n");
+                        printf("1. Insert at the beginning\n");
+                        printf("2. Insert at a specific position\n");
+                        printf("3. Insert at the end\n");
+                        printf("4. Delete from the beginning\n");
+                        printf("5. Delete from the end\n");
+                        printf("6. Delete from a specific position\n");
+                        printf("7. Check if the list is empty\n");
+                        printf("8. Display the list\n");
+                        printf("9. Search for a string\n");
+                        printf("10. Exit\n");
+                        printf("Enter your choice: ");
+                        scanf("%d", &choice);
+                
+                        switch (choice)
+                        {
+                        case 1:
+                            printf("Enter the string to insert at the beginning: ");
+                            scanf("%s", value);
+                            insert_at_begin(value);
+                            break;
+                        case 2:
+                            printf("Enter the string to insert: ");
+                            scanf("%s", value);
+                            printf("Enter the position to insert at: ");
+                            scanf("%d", &position);
+                            insert_at_pos(value, position);
+                            break;
+                        case 3:
+                            printf("Enter the string to insert at the end: ");
+                            scanf("%s", value);
+                            insert_at_end(value);
+                            break;
+                        case 4:
+                            delete_from_start();
+                            break;
+                        case 5:
+                            delete_from_end();
+                            break;
+                        case 6:
+                            printf("Enter the position to delete from: ");
+                            scanf("%d", &position);
+                            delete_from_pos(position);
+                            break;
+                        case 7:
+                            if (is_empty())
+                                printf("The list is empty.\n");
+                            else
+                                printf("The list is not empty.\n");
+                            break;
+                        case 8:
+                            display();
+                            break;
+                        case 9:
+                            printf("Enter the string to search for: ");
+                            scanf("%s", value);
+                            search(value);
+                            break;
+                        case 10:
+                            printf("Exiting the program.\n");
+                            exit(0);
+                        default:
+                            printf("Invalid choice. Please try again.\n");
+                        }
+                    }
+                
+                    return 0;
+                }
+        </code>
+    </pre>
+</body>
+</html>

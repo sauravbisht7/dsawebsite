@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                #include < string.h>
+                
+                struct strng_circular_ll
+                {
+                    char data[100];
+                    struct strng_circular_ll *next;
+                };
+                
+                struct strng_circular_ll *head = NULL;
+                
+                // is empty
+                int is_empty()
+                {
+                    return head == NULL;
+                }
+                
+                // print
+                void display()
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty.\n");
+                        return;
+                    }
+                
+                    struct strng_circular_ll *current = head;
+                    do
+                    {
+                        printf("%s -> ", current->data);
+                        current = current->next;
+                    } while (current != head);
+                    printf("NULL\n");
+                }
+                
+                // insert at start
+                void insert_at_begin(char value[])
+                {
+                    struct strng_circular_ll *nn = (struct strng_circular_ll *)malloc(sizeof(struct strng_circular_ll));
+                    strcpy(nn->data, value);
+                
+                    if (is_empty())
+                    {
+                        head = nn;
+                        nn->next = nn;
+                    }
+                    else
+                    {
+                        nn->next = head;
+                        struct strng_circular_ll *current = head;
+                        while (current->next != head)
+                        {
+                            current = current->next;
+                        }
+                        current->next = nn;
+                        head = nn;
+                    }
+                    printf("%s inserted at the beginning.\n", value);
+                }
+                
+                // insert at pos
+                void insert_at_pos(char value[], int position)
+                {
+                    if (position < 1)
+                    {
+                        printf("Invalid position.\n");
+                        return;
+                    }
+                
+                    struct strng_circular_ll *nn = (struct strng_circular_ll *)malloc(sizeof(struct strng_circular_ll));
+                    strcpy(nn->data, value);
+                
+                    if (is_empty() || position == 1)
+                    {
+                        insert_at_begin(value);
+                        return;
+                    }
+                
+                    struct strng_circular_ll *current = head;
+                    int count = 1;
+                    while (count < position - 1 && current->next != head)
+                    {
+                        current = current->next;
+                        count++;
+                    }
+                
+                    nn->next = current->next;
+                    current->next = nn;
+                    printf("%s inserted at position %d.\n", value, position);
+                }
+                
+                // Function to insert a node at the end of the list
+                void insert_at_end(char value[])
+                {
+                    struct strng_circular_ll *nn = (struct strng_circular_ll *)malloc(sizeof(struct strng_circular_ll));
+                    strcpy(nn->data, value);
+                    
+                    if (is_empty())
+                    {
+                        head = nn;
+                        nn->next = nn;  // Point to itself since it's the only node in the list
+                    }
+                    else
+                    {
+                        struct strng_circular_ll *current = head;
+                        while (current->next != head)
+                        {
+                            current = current->next;
+                        }
+                        current->next = nn;
+                        nn->next = head;  // Maintain the circular link by pointing to head
+                    }
+                    printf("%s inserted at the end.\n", value);
+                }
+                
+                
+                // Function to delete a node from the beginning of the list
+                void deleteAtBegin()
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    if (head->next == head)
+                    {
+                        free(head);
+                        head = NULL;
+                    }
+                    else
+                    {
+                        struct strng_circular_ll *temp = head;
+                        struct strng_circular_ll *current = head;
+                        while (current->next != head)
+                        {
+                            current = current->next;
+                        }
+                        head = head->next;
+                        current->next = head;//updated head
+                        free(temp);
+                    }
+                    printf("Deleted from the beginning.\n");
+                }
+                
+                // delete at end of list
+                void deleteAtEnd()
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    if (head->next == head)//single element
+                    {
+                        free(head);
+                        head = NULL;
+                    }
+                    else
+                    {
+                        struct strng_circular_ll *current = head;
+                        struct strng_circular_ll *prev = NULL;
+                        while (current->next != head)
+                        {
+                            prev = current;
+                            current = current->next;
+                        }
+                        prev->next = head;
+                        free(current);
+                    }
+                    printf("Deleted from the end.\n");
+                }
+                
+                //delete  from position
+                void deleteAtPos(int position)
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    if (position < 1)
+                    {
+                        printf("Invalid position.\n");
+                        return;
+                    }
+                
+                    if (position == 1)
+                    {
+                        deleteAtBegin();
+                        return;
+                    }
+                
+                    struct strng_circular_ll *current = head;
+                    struct strng_circular_ll *prev = NULL;
+                    int count = 1;
+                
+                    while (count < position && current->next != head)
+                    {
+                        prev = current;
+                        current = current->next;
+                        count++;
+                    }
+                
+                    if (count < position)
+                    {
+                        printf("Position not found in the list.\n");
+                        return;
+                    }
+                
+                    prev->next = current->next;
+                    free(current);
+                    printf("Deleted from position %d.\n", position);
+                }
+                
+                // Function to search for a value in the list
+                int search(char value[])
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Cannot search.\n");
+                        return 0;
+                    }
+                
+                    struct strng_circular_ll *current = head;
+                    int position = 1;
+                
+                    do
+                    {
+                        if (strcmp(current->data, value) == 0)
+                        {
+                            printf("%s found at position %d.\n", value, position);
+                            return 1;
+                        }
+                        current = current->next;
+                        position++;
+                    } while (current != head);
+                
+                    printf("%s not found in the list.\n", value);
+                    return 0;
+                }
+                
+                int main()
+                {
+                    int choice;
+                    char value[100];
+                    int position;
+                
+                    while (1)
+                    {
+                        printf("\nSingle Circular Linked List Operations:\n");
+                        printf("1. Insert at the beginning\n");
+                        printf("2. Insert at a specific position\n");
+                        printf("3. Insert at the end\n");
+                        printf("4. Delete from the beginning\n");
+                        printf("5. Delete from the end\n");
+                        printf("6. Delete from a specific position\n");
+                        printf("7. Check if the list is empty\n");
+                        printf("8. Display the list\n");
+                        printf("9. Search for a string\n");
+                        printf("10. Exit\n");
+                        printf("Enter your choice: ");
+                        scanf("%d", &choice);
+                
+                        switch (choice)
+                        {
+                        case 1:
+                            printf("Enter the string to insert at the beginning: ");
+                            scanf("%s", value);
+                            insert_at_begin(value);
+                            break;
+                        case 2:
+                            printf("Enter the string to insert: ");
+                            scanf("%s", value);
+                            printf("Enter the position to insert at: ");
+                            scanf("%d", &position);
+                            insert_at_pos(value, position);
+                            break;
+                        case 3:
+                            printf("Enter the string to insert at the end: ");
+                            scanf("%s", value);
+                            insert_at_end(value);
+                            break;
+                        case 4:
+                            deleteAtBegin();
+                            break;
+                        case 5:
+                            deleteAtEnd();
+                            break;
+                        case 6:
+                            printf("Enter the position to delete from: ");
+                            scanf("%d", &position);
+                            deleteAtPos(position);
+                            break;
+                        case 7:
+                            if (is_empty())
+                                printf("The list is empty.\n");
+                            else
+                                printf("The list is not empty.\n");
+                            break;
+                        case 8:
+                            display();
+                            break;
+                        case 9:
+                            printf("Enter the string to search for: ");
+                            scanf("%s", value);
+                            search(value);
+                            break;
+                        case 10:
+                            printf("Exiting the program.\n");
+                            exit(0);
+                        default:
+                            printf("Invalid choice. Please try again.\n");
+                        }
+                    }
+                
+                    return 0;
+                }
+        </code>
+    </pre>
+</body>
+</html>

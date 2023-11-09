@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre>
+        <body style="background-color: black;">
+            <pre>
+                <code style="color:white">
+                    #include< stdio.h>
+
+                        int main(){   
+                        int arr1[10],arr2[10],i;
+                        
+                        printf("You can only enter upto 10 values\n");
+                        printf("Enter the elements in Array\n");
+                        for( i=0;i<=9;i++)
+                        {
+                        printf("%d Element:",i+1);
+                        scanf("%d",&arr1[i]);
+                        
+                        
+                        printf("\n");
+                        }
+                        /*-----------------------------------*/
+                        //Logic
+                        for(i=0;i< 10;i++)
+                        arr2[i] = arr1[i];
+                        /*-----------------------------------*/
+                        
+                        printf("The Array is given below\n");
+                        for( i=0;i<=9;i++)
+                        printf("%d\t",arr2[i]);
+                        return 0;
+                        }
+                        
+                        OUTPUT:-
+                        
+                        You can only enter upto 10 values
+                        Enter the elements in Array
+                        1 Element:12
+                        2 Element:14
+                        3 Element:16
+                        4 Element:71
+                        5 Element:72
+                        6 Element:51
+                        7 Element:41
+                        8 Element:63
+                        9 Element:96
+                        10 Element:85
+                        
+                        The Array is given below
+                        12      14      16      71      72      51      41      63      96      85            
+                </code>
+            </pre>
+                     
+        </code>
+    </pre>
+</body>
+</html>

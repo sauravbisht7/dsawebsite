@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+
+                // Function to find the smallest element in an array using recursion
+                int findSmallest(int arr[], int size) {
+                    // Base case: if the array has only one element, return it
+                    if (size == 1) {
+                        return arr[0];
+                    } else {
+                        // Recursive case: find the smallest element in the rest of the array
+                        int minInRest = findSmallest(arr + 1, size - 1);
+                
+                        // Compare the smallest element in the rest with the current element
+                        return (arr[0] < minInRest) ? arr[0] : minInRest;
+                    }
+                }
+                
+                int main() {
+                    // Input the size of the array
+                    int size;
+                    printf("Enter the size of the array: ");
+                    scanf("%d", &size);
+                
+                    // Input the elements of the array
+                    int arr[size];
+                    printf("Enter %d elements of the array:\n", size);
+                    for (int i = 0; i < size; ++i) {
+                        scanf("%d", &arr[i]);
+                    }
+                
+                    // Find and print the smallest element in the array
+                    int smallest = findSmallest(arr, size);
+                    printf("The smallest element in the array is: %d\n", smallest);
+                
+                    return 0;
+                }
+                  
+
+
+
+                output
+                Enter the size of the array: 6
+                Enter 6 elements of the array:
+                45 12 7 31 19 5
+                The smallest element in the array is: 5
+
+        </code>
+    </pre>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre>
+        <body style="background-color: black;">
+            <pre>
+                <code style="color:white">
+                    #include< stdio.h>
+                        #include< conio.h>
+                        int main()
+                        {
+                            int array1[10],array2[10],i,j=3;
+                            printf("Space allocation form 10 values is granted successfully");
+                            for ( i = 0; i < 3; i++)
+                            {
+                                printf("\nEnter %d value : ",i+1);
+                                scanf("%d",&array1[i]);
+                            }
+                        
+                               for ( i = 0; i < 3; i++)
+                            {
+                                
+                                array2[j]=array1[i];
+                                j--;
+                            }
+                                    printf("\nGiven values in first array are succesfully stored in second array in reverse order : ");
+                        
+                               for ( i = 3; i >=0; i--)
+                            {
+                                printf(" \n%d. value is :  %d \n",i,array2[i]);
+                            }
+                            
+                        }
+                        
+                        
+                        OUTPUT : - 
+                        
+                        Space allocation form 10 values is granted successfully
+                        Enter 1 value : 12
+                        
+                        Enter 2 value : 14
+                        
+                        Enter 3 value : 18
+                        
+                        Given values in first array are succesfully stored in second array in reverse order :
+                        3. value is :  12
+                        2. value is :  14
+                        1. value is :  18              
+                </code>
+            </pre>
+                     
+        </code>
+    </pre>
+</body>
+</html>

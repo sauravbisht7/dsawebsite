@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            // queue program using local variable only.
+            #include < stdio.h>
+            #define MAX_SIZE 100
+            
+            int q[MAX_SIZE];//array queue
+            int front = -1, rear = -1;
+            
+            // empty
+            int is_empty() {
+                return (front == -1);
+            }
+            
+            //full
+            int is_full() {
+                return (rear == MAX_SIZE - 1);
+            }
+            
+            // insert element
+            void enq(int value) {
+                if (is_full()) {
+                    printf("Queue is full. Cannot insert.\n");
+                } else {
+                    if (is_empty()) {
+                        front = rear = 0;
+                    } else {
+                        rear++;
+                    }
+                    q[rear] = value;
+                    printf("Inserted: %d\n", value);
+                }
+            }
+            
+            // delete from front
+            void dq() {
+                if (is_empty()) {
+                    printf("Queue is empty. Cannot delete.\n");
+                } else {
+                    printf("Deleted: %d\n", q[front]);
+                    if (front == rear) {//if htere is only 1 value
+                        front = rear = -1;//initial stage of array queue
+                    } else {
+                        front++;//update front
+                    }
+                }
+            }
+            
+            // Function to peek at the front element of the queue
+            int show() {
+                if (is_empty()) {
+                    printf("Queue is empty. Cannot peek.\n");
+                    return -1; // to indicate no value
+                }
+                return q[rear];
+            }
+            
+            int main()
+            {
+                int value,ret=0;
+                int get;
+                do{
+            
+                    printf("\n1.Enqueue Operation\n");
+                    printf("2.Dequeue Operation\n");
+                    printf("3.Display the Queue\n");
+                    printf("4.Exit\n");
+                    printf("Enter your choice of operations : ");
+                    scanf("%d",&get);
+            
+                   switch (get)
+                    {
+                        case 1:
+                        printf("Element to be inserted in the Queue\n : ");
+                        scanf("%d", &value);
+                        enq(value);
+                        break;
+            
+                        case 2:
+                        dq();
+                        break;
+            
+                        case 3:
+                        ret=show();
+                        if (ret==-1)
+                        {
+                            printf("\n Noelement to delete");
+                        }
+                        else
+                        printf("value in front top : %d",ret);
+                        
+                        break;
+                        case 4:
+                        printf("Program terminated");
+                        break;
+            
+                        default:
+                        printf("Incorrect choice \n");
+                    } //end of switch 
+                } 
+                    while (get != 4);
+            
+                // end of while
+                
+                return 0;
+            } //end of main                       
+        </code>
+    </pre>
+</body>
+</html>

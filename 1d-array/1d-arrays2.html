@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include< stdio.h>
+
+                int main(){   
+                int arr[10],i;
+                
+                printf("You can only enter upto 10 values\n");
+                
+                printf("Enter the elements in Array\n");
+                
+                for( i=0;i<=9;i++)
+                {
+                printf("%d Element:",i+1);
+                
+                scanf("%d",&arr[i]);
+                
+                printf("\n");
+                }
+                
+                printf("The Array in reverse order is given below\n");
+                for( i=9;i>=0;i--)
+                printf("%d\t",arr[i]);
+                return 0;
+                }
+                
+
+                
+                OUTPUT:- 
+                
+                You can only enter upto 10 values
+                Enter the elements in Array
+                1 Element:2
+                2 Element:4
+                3 Element:6
+                4 Element:8
+                5 Element:10
+                6 Element:12
+                7 Element:14
+                8 Element:16
+                9 Element:18
+                10 Element:20
+                
+                The Array in reverse order is given below
+                20      18      16      14      12      10      8       6       4       2
+        </code>
+    </pre>
+</body>
+</html>

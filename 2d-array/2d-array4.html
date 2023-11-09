@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre>
+        <body style="background-color: black;">
+            <pre>
+                <code style="color:white">
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Document</title>
+                    </head>
+                    <body>
+                        <pre>
+                            <body style="background-color: black;">
+                                <pre>
+                                    <code style="color:white">
+                                        #include < stdio.h>
+                                            int main() {
+                                              int row, col, a[100][100], b[100][100], subtract[100][100], i, j;
+                                              printf("Enter the number of rows (between 1 and 100): ");
+                                              scanf("%d", &row);
+                                              printf("Enter the number of columns (between 1 and 100): ");
+                                              scanf("%d", &col);
+                                            // getting first array
+                                              printf("\nEnter elements of 1st matrix:\n");
+                                              for (i = 0; i < row; ++i)
+                                                for (j = 0; j < col; ++j) {
+                                                  printf("Enter element a%d%d: ", i + 1, j + 1);
+                                                  scanf("%d", &a[i][j]);
+                                                }
+                                            //getting secod array
+                                              printf("Enter elements of 2nd matrix:\n");
+                                              for (i = 0; i < row; ++i)
+                                                for (j = 0; j < col; ++j) {
+                                                  printf("Enter element b%d%d: ", i + 1, j + 1);
+                                                  scanf("%d", &b[i][j]);
+                                                }
+                                            
+                                              // subtracting two matric b-a
+                                              for (i = 0; i < row; ++i)
+                                                for (j = 0; j < col; ++j) {
+                                                  subtract[i][j] = b[i][j] - a[i][j];
+                                                }
+                                            
+                                              // printing the result
+                                              printf("\nSubtraction of two matrices (b-a): \n");
+                                              for (i = 0; i < row; ++i)
+                                                for (j = 0; j < col; ++j) {
+                                                  printf("%d   ", subtract[i][j]);
+                                                  if (j == col - 1) { //so that the matrix goes to the new line after the last col element
+                                                    printf("\n\n");
+                                                  }
+                                                }
+                                            
+                                              return 0;
+                                            }
+                                    </code>
+                                </pre>
+                                         
+                            </code>
+                        </pre>
+                    </body>
+                    </html>
+                        }
+                </code>
+            </pre>
+                     
+        </code>
+    </pre>
+</body>
+</html>

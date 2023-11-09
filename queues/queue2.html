@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                
+                #define MAX_SIZE 100
+                
+                char queue[MAX_SIZE][100];
+                int front = -1, rear = -1;
+                
+                // Function to check if the queue is empty
+                int isEmpty() {
+                    return (front == -1);
+                }
+                
+                // Function to check if the queue is full
+                int isFull() {
+                    return (rear == MAX_SIZE - 1);
+                }
+                
+                // Function to insert (enqueue) a string into the queue
+                void insert(char str[]) {
+                    if (isFull()) {
+                        printf("Queue is full. Cannot insert.\n");
+                    } else {
+                        if (isEmpty()) {
+                            front = rear = 0;
+                        } else {
+                            rear++;
+                        }
+                        strcpy(queue[rear], str);
+                        printf("Inserted: %s\n", str);
+                    }
+                }
+                
+                // Function to delete (dequeue) a string from the queue
+                void delete() {
+                    if (isEmpty()) {
+                        printf("Queue is empty. Cannot delete.\n");
+                    } else {
+                        printf("Deleted: %s\n", queue[front]);
+                        if (front == rear) {
+                            front = rear = -1;
+                        } else {
+                            front++;
+                        }
+                    }
+                }
+                
+                // Function to peek at the front string of the queue
+                char* peek() {
+                    if (isEmpty()) {
+                        printf("Queue is empty. Cannot peek.\n");
+                        return NULL;
+                    }
+                    return queue[front];
+                }
+                
+                void main()
+                {
+                    int get;
+                    char input[100];
+                    do
+                    {
+                        printf("\n1.insert value\n2.delete\n3.show\n4.isEmpty\n5.isFull\n6.Terminate program");
+                        printf("\nEnter your choice : ");
+                        scanf("%d",&get);
+                        switch (get)
+                        {
+                        case 1:
+                            printf("Enter string to store  : ");
+                            scanf("%s",input);
+                            insert(input);
+                            break;
+                
+                        case 2:
+                            delete();
+                            break;
+                
+                        case 3:
+                            printf("Value is : %s",peek());
+                            break;
+                
+                        case 4:
+                            printf("%d",isEmpty());
+                            break;
+                
+                        case 5:
+                         printf("%d",isFull());
+                            break;
+                        default:
+                            break;
+                        }
+                    } while (get != 6);
+                }            
+        </code>
+    </pre>
+</body>
+</html>

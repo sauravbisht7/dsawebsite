@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+
+                // Function to find the largest element in an array using recursion
+                int findLargest(int arr[], int size) {
+                    // Base case: if the array has only one element, return it
+                    if (size == 1) {
+                        return arr[0];
+                    } else {
+                        // Recursive case: find the largest element in the rest of the array
+                        int maxInRest = findLargest(arr + 1, size - 1);
+                
+                        // Compare the largest element in the rest with the current element
+                        return (arr[0] > maxInRest) ? arr[0] : maxInRest;
+                    }
+                }
+                
+                int main() {
+                    // Input the size of the array
+                    int size;
+                    printf("Enter the size of the array: ");
+                    scanf("%d", &size);
+                
+                    // Input the elements of the array
+                    int arr[size];
+                    printf("Enter %d elements of the array:\n", size);
+                    for (int i = 0; i < size; ++i) {
+                        scanf("%d", &arr[i]);
+                    }
+                
+                    // Find and print the largest element in the array
+                    int largest = findLargest(arr, size);
+                    printf("The largest element in the array is: %d\n", largest);
+                
+                    return 0;
+                }
+
+
+
+
+        
+                       OUTPUT
+                      Enter the size of the array: 5
+                      Enter 5 elements of the array:
+                      12 5 8 23 15
+                      The largest element in the array is: 23
+
+                
+           
+        </code>
+    </pre>
+</body>
+</html>

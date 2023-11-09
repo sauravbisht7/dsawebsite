@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                
+                #define MAX_SIZE 10
+                
+                int priority_q[MAX_SIZE];//queue
+                int pty[MAX_SIZE];//priority of the queue
+                int size = 0;//current location
+                
+                //is empty
+                int isEmpty() {
+                    return size == 0;
+                }
+                
+                //is full
+                int isFull() {
+                    return size == MAX_SIZE;
+                }
+                
+                //insert in priority queue
+                void insert(int value, int priority) {
+                    if (isFull()) {
+                        printf("Priority Queue is full. Cannot insert.\n");
+                    } else {
+                        int i = size - 1;//so that it can compare priority of last inserted element to new
+                        //insertrd element. so, i starts from last and traverse through all
+                        while (i >= 0 && pty[i] > priority) {
+                            priority_q[i + 1] = priority_q[i];//shift elements itself
+                            pty[i + 1] = pty[i];//shift element's priority
+                            i--;//i going back
+                        }
+                        priority_q[i + 1] = value;//why i+1. so that value doesn't overrde
+                        //and is inserted at next place
+                        pty[i + 1] = priority;//set priority too
+                        size++;
+                        printf("Inserted: %d with priority %d\n", value, priority);
+                    }
+                }
+                
+                //delete the element with the highest priority 
+                void delete() {
+                    if (isEmpty()) {
+                        printf("Priority Queue is empty. Cannot delete.\n");
+                    } else {
+                        printf("Deleted: %d with priority %d\n", priority_q[0], pty[0]);
+                        //first print element and it's priority
+                        for (int i = 1; i < size; i++) {
+                            priority_q[i - 1] = priority_q[i];//shift queue back
+                            pty[i - 1] = pty[i];//shift priority back
+                        }
+                        size--;
+                    }
+                }
+                
+                // peek element with the highest priority
+                int peek() {
+                    if (isEmpty()) {
+                        printf("Priority Queue is empty. Cannot peek.\n");
+                        return -1;
+                    }
+                    return priority_q[0];//no need to find
+                    //as the highest priority will be on top
+                }
+                
+                // Function to display the menu and get the user's choice
+                int getMenuChoice() {
+                    int choice;
+                    printf("\nMenu:\n");
+                    printf("1. Insert\n");
+                    printf("2. Delete (highest priority)\n");
+                    printf("3. Peek (highest priority)\n");
+                    printf("4. Check if Empty\n");
+                    printf("5. Check if Full\n");
+                    printf("6. Exit\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &choice);
+                    return choice;
+                }
+                
+                int main() {
+                    int choice, value, priority;
+                
+                    while (1) {
+                        choice = getMenuChoice();
+                
+                        switch (choice) {
+                            case 1:
+                                printf("Enter an integer to insert into the priority queue: ");
+                                scanf("%d", &value);
+                                printf("Enter the priority for this element: ");
+                                scanf("%d", &priority);
+                                insert(value, priority);
+                                break;
+                            case 2:
+                                delete();
+                                break;
+                            case 3:
+                                printf("Element with highest priority: %d\n", peek());
+                                break;
+                            case 4:
+                                if (isEmpty()) {
+                                    printf("Priority Queue is empty.\n");
+                                } else {
+                                    printf("Priority Queue is not empty.\n");
+                                }
+                                break;
+                            case 5:
+                                if (isFull()) {
+                                    printf("Priority Queue is full.\n");
+                                } else {
+                                    printf("Priority Queue is not full.\n");
+                                }
+                                break;
+                            case 6:
+                                return 0;
+                            default:
+                                printf("Invalid choice. Please try again.\n");
+                        }
+                    }
+                
+                    return 0;
+                }            
+        </code>
+    </pre>
+</body>
+</html>

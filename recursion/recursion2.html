@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+
+                // Function to calculate the Fibonacci of a number using recursion
+                int fibonacci(int n) {
+                    if (n <= 1) {
+                        return n;
+                    } else {
+                        return fibonacci(n - 1) + fibonacci(n - 2);
+                    }
+                }
+                
+                int main() {
+                    int num;
+                    printf("Enter a number: ");
+                    scanf("%d", &num);
+                    printf("Fibonacci of %d is: %d", num, fibonacci(num));
+                    return 0;
+                }
+
+
+
+                
+                output
+                Enter the number of terms in the Fibonacci series: 8
+                Fibonacci series: 0 1 1 2 3 5 8 13
+
+           
+        </code>
+    </pre>
+</body>
+</html>

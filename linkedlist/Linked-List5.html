@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                #include < string.h>
+                
+                struct strng_ll
+                {
+                    char data[100]; // lets assune 100 is
+                    struct strng_ll *next;
+                };
+                
+                struct strng_ll *head = NULL;
+                
+                // empty
+                int is_empty()
+                {
+                    return head == NULL;
+                }
+                
+                // print
+                void display()
+                {
+                    struct strng_ll *current = head;
+                
+                    if (is_empty())
+                    {
+                        printf("The list is empty.\n");
+                        return;
+                    }
+                
+                    printf("List elements: ");
+                    while (current != NULL)
+                    {
+                        printf("%s -> ", current->data);
+                        current = current->next;
+                    }
+                    printf("NULL\n");
+                }
+                
+                // insert at beginning 
+                void insert_at_begin(char value[])
+                {
+                    struct strng_ll *nn = (struct strng_ll *)malloc(sizeof(struct strng_ll));
+                    strcpy(nn->data, value);
+                    nn->next = head;//as it is inserted at beginning
+                    head = nn;
+                    printf("%s inserted at the beginning.\n", value);
+                }
+                
+                // insert at position
+                void insert_at_pos(char value[], int position)
+                {
+                    if (position < 1)
+                    {
+                        printf("Invalid position.\n");
+                        return;
+                    }
+                
+                    struct strng_ll *nn = (struct strng_ll *)malloc(sizeof(struct strng_ll));
+                    strcpy(nn->data, value);
+                
+                    if (position == 1 || is_empty())
+                    {
+                        //same as beginning
+                        nn->next = head;//nn's next now will point to element head was pointing
+                        head = nn;//and noow new node is head
+                        printf("%s inserted at position 1.\n", value);
+                        return;
+                    }
+                
+                    struct strng_ll *temp = head;
+                    int count = 1;
+                
+                    while (count < position - 1 && temp->next != NULL)
+                    {
+                        temp = temp->next;
+                        count++;
+                    }
+                // temp is now at postion of inserting
+                    nn->next = temp->next;
+                    temp->next = nn;
+                    printf("%s inserted at position %d.\n", value, position);
+                }
+                
+                // Function to insert a node at the end of the list
+                void insert_at_end(char value[])
+                {
+                    struct strng_ll *nn = (struct strng_ll *)malloc(sizeof(struct strng_ll));
+                    strcpy(nn->data, value);
+                    nn->next = NULL;
+                
+                    if (is_empty())
+                    {
+                        head = nn;
+                    }
+                    else
+                    {
+                        struct strng_ll *current = head;
+                
+                        while (current->next != NULL)
+                        {
+                            current = current->next;
+                        }
+                
+                        current->next = nn;
+                    }
+                    printf("%s inserted at the end.\n", value);
+                }
+                
+                // Function to delete a node from the beginning of the list
+                void deleteAtBegin()
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    struct strng_ll *temp = head;
+                    head = head->next;
+                    free(temp);
+                    printf("Deleted from the beginning.\n");
+                }
+                
+                // delete last
+                void deleteAtEnd()
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    if (head->next == NULL)
+                    {
+                        free(head);
+                        head = NULL;
+                    }
+                    else
+                    {
+                        struct strng_ll *current = head;
+                        struct strng_ll *prev = NULL;
+                
+                        while (current->next != NULL)
+                        {
+                            prev = current;
+                            current = current->next;
+                        }
+                
+                        prev->next = NULL;
+                        free(current);
+                    }
+                    printf("Deleted from the end.\n");
+                }
+                
+                // delete from pos
+                void deleteAtPos(int position)
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    if (position < 1)
+                    {
+                        printf("Invalid position.\n");
+                        return;
+                    }
+                
+                    if (position == 1)
+                    {
+                        deleteAtBegin();
+                        return;
+                    }
+                
+                    struct strng_ll *current = head;
+                    struct strng_ll *prev = NULL;
+                    int count = 1;
+                
+                    while (count < position && current->next != NULL)
+                    {
+                        prev = current;
+                        current = current->next;
+                        count++;
+                    }
+                
+                    if (count < position)
+                    {
+                        printf("Position not found in the list.\n");
+                        return;
+                    }
+                
+                    prev->next = current->next;
+                    free(current);
+                    printf("Deleted from position %d.\n", position);
+                }
+                
+                // Function to search for a value in the list
+                int search(char value[100])
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Cannot search.\n");
+                        return 0;
+                    }
+                
+                    struct strng_ll *current = head;
+                    int position = 1;
+                
+                    while (current != NULL)
+                    {
+                        if (strcmp(current->data, value) == 0)
+                        {
+                            printf("%s found at position %d.\n", value, position);
+                            return 1;
+                        }
+                        current = current->next;
+                        position++;
+                    }
+                
+                    printf("%s not found in the list.\n", value);
+                    return 0;
+                }
+                
+                int main()
+                {
+                    int choice;
+                    char value[100];
+                    int position;
+                
+                    while (1)
+                    {
+                        printf("\nSingly Linked List Operations:\n");
+                        printf("1. Insert at the beginning\n");
+                        printf("2. Insert at a specific position\n");
+                        printf("3. Insert at the end\n");
+                        printf("4. Delete from the beginning\n");
+                        printf("5. Delete from the end\n");
+                        printf("6. Delete from a specific position\n");
+                        printf("7. Check if the list is empty\n");
+                        printf("8. Display the list\n");
+                        printf("9. Search for a string\n");
+                        printf("10. Exit\n");
+                        printf("Enter your choice: ");
+                        scanf("%d", &choice);
+                
+                        switch (choice)
+                        {
+                        case 1:
+                            printf("Enter the string to insert at the beginning: ");
+                            scanf("%s", value);
+                            insert_at_begin(value);
+                            break;
+                        case 2:
+                            printf("Enter the string to insert: ");
+                            scanf("%s", value);
+                            printf("Enter the position to insert at: ");
+                            scanf("%d", &position);
+                            insert_at_pos(value, position);
+                            break;
+                        case 3:
+                            printf("Enter the string to insert at the end: ");
+                            scanf("%s", value);
+                            insert_at_end(value);
+                            break;
+                        case 4:
+                            deleteAtBegin();
+                            break;
+                        case 5:
+                            deleteAtEnd();
+                            break;
+                        case 6:
+                            printf("Enter the position to delete from: ");
+                            scanf("%d", &position);
+                            deleteAtPos(position);
+                            break;
+                        case 7:
+                            if (is_empty())
+                                printf("The list is empty.\n");
+                            else
+                                printf("The list is not empty.\n");
+                            break;
+                        case 8:
+                            display();
+                            break;
+                        case 9:
+                            printf("Enter the string to search for: ");
+                            scanf("%s", value);
+                            search(value);
+                            break;
+                        case 10:
+                            printf("Exiting the program.\n");
+                            exit(0);
+                        default:
+                            printf("Invalid choice. Please try again.\n");
+                        }
+                    }
+                
+                    return 0;
+                }
+        </code>
+    </pre>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                struct q
+                {
+                    int data;
+                    struct q *next;
+                };
+                    struct q *front = NULL;
+                    struct q *rear = NULL;
+                void enqueue(int value)
+                {
+                    struct q*nn=(struct q*)malloc(sizeof(struct q));
+                    if (nn==NULL)
+                    {
+                        printf("\nqueue is full");
+                    }
+                    else
+                    {
+                        nn->data=value;
+                        nn->next=NULL;
+                        if (front==NULL)
+                        {
+                            front=rear=nn;
+                        }
+                        else
+                        {
+                            rear->next=nn;
+                            rear=nn;//so that now rear is updated and not pointing to the past value. now pointing updated rear value
+                        }
+                        
+                    }
+                    
+                }
+                int dequeue()
+                {
+                    int val=-1;
+                    struct q*check=front;
+                    if(front==NULL)
+                    {
+                        printf("Queue is empty");
+                    }
+                    else
+                    {
+                        front=front->next;
+                        val=check->data;//to know which element is deleted
+                        free(check);
+                    }
+                    return val;
+                }
+                // print the linked list
+                void traverse(struct q *point)
+                {
+                    if (point == NULL)
+                    {
+                        printf("NO value found to print. Insert some values first");
+                    }
+                    else
+                    {
+                        while (point != NULL)
+                        {
+                            printf("%d, ", point->data);
+                            point = point->next;
+                        }
+                    }
+                }
+                //!-----------------------------------------------------------------------------------------------------!
+                void main()
+                {
+                    int value;
+                    int get;
+                    do{
+                
+                        printf("\n1.Enqueue Operation\n");
+                        printf("2.Dequeue Operation\n");
+                        printf("3.Display the Queue\n");
+                        printf("4.Exit\n");
+                        printf("Enter your choice of operations : ");
+                        scanf("%d",&get);
+                
+                       switch (get)
+                        {
+                            case 1:
+                            printf("Element to be inserted in the Queue\n : ");
+                            scanf("%d", &value);
+                            enqueue(value);
+                            break;
+                
+                            case 2:
+                            printf("value deteted : %d",dequeue());
+                            break;
+                
+                            case 3:
+                            traverse(front);            
+                            break;
+                            case 4:
+                            printf("Program terminated");
+                            break;
+                
+                            default:
+                            printf("Incorrect choice \n");
+                        } //end of switch 
+                    } 
+                        while (get != 4);
+                
+                    // end of while
+                
+                } //end of main             
+        </code>
+    </pre>
+</body>
+</html>

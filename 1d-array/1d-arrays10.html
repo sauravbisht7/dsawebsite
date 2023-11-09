@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre>
+        <body style="background-color: black;">
+            <pre>
+                <code style="color:white">
+                    #include< stdio.h>
+
+                        int main(){   
+                        int arr[10],i,sum = 0;
+                        
+                        printf("You can only enter upto 10 values\n");
+                        printf("Enter the elements in Array\n");
+                        for( i=0;i<=9;i++)
+                        {
+                        printf("%d Element:",i+1);
+                        scanf("%d",&arr[i]);
+                        
+                        printf("\n");
+                        }
+                        
+                        /*------------------------------------*/
+                                   //Logic
+                        
+                        for( i=0;i<=9;i++)
+                        sum += arr[i];
+                                   
+                        
+                        /*------------------------------------*/
+                        
+                        printf("The  Sum of Array i %d\n",sum);
+                        
+                        return 0;
+                        }
+                        
+                        
+                        OUTPUT : - 
+                        
+                        You can only enter upto 10 values
+                        Enter the elements in Array
+                        1 Element:1
+                        2 Element:2
+                        3 Element:3
+                        4 Element:4
+                        5 Element:5
+                        6 Element:6
+                        7 Element:7
+                        8 Element:8
+                        9 Element:9
+                        10 Element:10
+                        
+                        The  Sum of Array is:-  55
+                </code>
+            </pre>
+                     
+        </code>
+    </pre>
+</body>
+</html>

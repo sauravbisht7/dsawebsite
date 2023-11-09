@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre>
+        <body style="background-color: black;">
+            <pre>
+                <code style="color:white">
+                    #include< stdio.h>
+
+                        int main(){   
+                        int arr[10],i,j;
+                        
+                        printf("You can only enter upto 10 values\n");
+                        printf("Enter the elements in Array\n");
+                        for(int i=0;i<=9;i++)
+                        {
+                        printf("%d Element:",i+1);
+                        scanf("%d",&arr[i]);
+                        
+                        printf("\n");
+                        }
+                        printf("Here are the Duplicate values-->\n");
+                                   //Logic
+                                for(i = 0; i <= 9;i++)
+                                {
+                                    for(j = i+1 ;j <= 9; j++)
+                                    {
+                                        if(arr[i] == arr[j])
+                                        printf("%d\n",arr[i]);
+                                        
+                                    }
+                                    
+                                }   
+                        
+                        
+                        return 0;
+                        }
+                        OUTPUT : - 
+                        
+                        You can only enter upto 10 values
+                        Enter the elements in Array
+                        1 Element:12
+                        2 Element:14
+                        3 Element:12
+                        4 Element:15
+                        5 Element:41
+                        6 Element:22
+                        7 Element:15
+                        8 Element:21
+                        9 Element:22
+                        10 Element:15
+                        Here are the Duplicate values-->
+                        12
+                        15
+                        15
+                        22
+                        15
+                </code>
+            </pre>
+                     
+        </code>
+    </pre>
+</body>
+</html>

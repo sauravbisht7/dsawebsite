@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                
+                struct sclk {
+                    int data;
+                    struct sclk *next;
+                };
+                
+                struct sclk *head = NULL;
+                
+                // Function to check if the list is empty
+                int is_empt() {
+                    return head == NULL;
+                }
+                
+                // Function to display the elements of the list
+                void display() {
+                    struct sclk *current;
+                    if (is_empt()) {
+                        printf("The list is empty.\n");
+                        return;
+                    }
+                
+                    current = head;
+                    printf("List elements: ");
+                    do {
+                        printf("%d -> ", current->data);
+                        current = current->next;
+                    } while (current != head);
+                    printf("NULL\n");
+                }
+                
+                // Function to insert a node at the beginning of the list
+                void insert_at_beg(int value) {
+                    struct sclk *nn = (struct sclk *)malloc(sizeof(struct sclk));
+                    nn->data = value;
+                    nn->next = head;// not with null
+                    // so that it can be in a circular structure
+                    //if it is null it will make a linear structure
+                
+                    if (is_empt()) {
+                        head = nn;//head point to new node
+                        head->next = head;//node point to itself like head
+                    } else {
+                        struct sclk *current = head;
+                        // temp pointer to traverse through ll and find last node
+                        while (current->next != head) {
+                            //will go until:- 
+                            //continues until current->next points to the head, 
+                            //indicating the last node in the list.
+                            current = current->next;
+                        }
+                        current->next = nn;//was null and now will be
+                        //updates the next pointer of the last node to point to the new node nn
+                        head = nn;
+                    }
+                    printf("%d inserted at the beginning.\n",value);
+                }
+                
+                // Function to insert a node at a specified position
+                void insert_at_pos(int value, int position) {
+                    if (position < 1) {//not possible to insert at any index
+                        printf("Invalid position.\n");
+                        return;
+                    }
+                
+                    struct sclk *nn = (struct sclk *)malloc(sizeof(struct sclk));
+                    nn->data = value;
+                
+                    if (is_empt()) {//so it can only be inserted at first
+                        if (position != 1) {
+                            printf("List is empty, can only insert at position 1.\n");
+                            return;
+                        }
+                        //if it is one position indeed,then
+                        head = nn;
+                        head->next = head;
+                        printf("%d inserted at position 1.\n",value);
+                        return;
+                    }
+                
+                    struct sclk *current = head;//take help with current pointer again just like above
+                    int count = 1;
+                    while (count < position - 1 /*as index starts from 0*/ && current->next != head) {
+                        current = current->next;
+                        count++;
+                    }
+                // after this we will be at the position desired
+                    nn->next = current->next;
+                    current->next = nn;
+                    printf("%d inserted at position %d.\n", value, position);
+                }
+                
+                // Function to insert a node at the end of the list
+                void insert_at_end(int value) {
+                    struct sclk *nn = (struct sclk *)malloc(sizeof(struct sclk));
+                    nn->data = value;
+                    nn->next = head;//just update head
+                
+                    if (is_empt()) {
+                        head = nn;
+                        head->next = head;
+                    } else {
+                        struct sclk *current = head;
+                        while (current->next != head) {//again find last element
+                            current = current->next;
+                        }
+                        current->next = nn;
+                    }
+                    printf("%d inserted at the end.\n",value);
+                }
+                
+                // Function to delete a node from the beginning of the list
+                void deleteAtBegin() {
+                    if (is_empt()) {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    if (head->next == head) {//one element
+                        free(head);//0 element
+                        head = NULL;
+                    } else {
+                        struct sclk *current = head;
+                        while (current->next != head) {
+                            current = current->next;
+                        }//so that now last element points to the new head not old one
+                        struct sclk *temp = head;
+                        head = head->next;
+                        current->next = head;
+                        free(temp);//this is old head pointed by temp
+                    }
+                    printf("Deleted from the beginning.\n");
+                }
+                
+                // Function to delete a node from the end of the list
+                void deleteAtEnd() {
+                    if (is_empt()) {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    if (head->next == head) {
+                        free(head);
+                        head = NULL;
+                    } else {
+                        struct sclk *current = head;
+                        struct sclk *prev = NULL;//so that we can also find element prev to last
+                        while (current->next != head) {
+                            prev = current;//last element -1
+                            current = current->next;
+                        }
+                        prev->next = head;//new last element pointing at head
+                        free(current);//free last
+                    }
+                    printf("Deleted from the end.\n");
+                }
+                
+                // Function to delete a node from a specified position
+                void deleteAtPos(int position) {
+                    if (is_empt()) {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    if (position < 1) {
+                        printf("Invalid position.\n");
+                        return;
+                    }
+                
+                    if (position == 1) {
+                        deleteAtBegin();
+                        return;
+                    }
+                
+                    struct sclk *current = head;
+                    struct sclk *prev = NULL;
+                    int count = 1;
+                    while (count < position && current->next != head) {//find posittion
+                        prev = current;
+                        current = current->next;
+                        count++;
+                    }
+                
+                    if (count < position) {
+                        printf("Position not found in the list.\n");
+                        return;
+                    }
+                
+                    prev->next = current->next;//now we ignore the current value
+                    free(current);//delete free
+                    printf("Deleted from position %d.\n", position);
+                }
+                
+                // Function to search for a value in the list
+                int search(int value) {
+                    if (is_empt()) {
+                        printf("The list is empty. Cannot search.\n");
+                        return 0;
+                    }
+                
+                    struct sclk *current = head;
+                    int position = 1;
+                    do {
+                        if (current->data == value) {
+                            printf("%d found at position %d.\n", value, position);
+                            return 1;
+                        }
+                        current = current->next;
+                        position++;
+                    } while (current != head);
+                
+                    printf("%d not found in the list.\n", value);
+                    return 0;
+                }
+                
+                int main() {
+                    int choice, value, position;
+                
+                    while (1) {
+                        printf("\nSingle Circular Linked List Operations:\n");
+                        printf("1. Insert at the beginning\n");
+                        printf("2. Insert at a specific position\n");
+                        printf("3. Insert at the end\n");
+                        printf("4. Delete from the beginning\n");
+                        printf("5. Delete from the end\n");
+                        printf("6. Delete from a specific position\n");
+                        printf("7. Check if the list is empty\n");
+                        printf("8. Display the list\n");
+                        printf("9. Search for an element\n");
+                        printf("10. Exit\n");
+                        printf("Enter your choice: ");
+                        scanf("%d", &choice);
+                
+                        switch (choice) {
+                            case 1:
+                                printf("Enter the value to insert: ");
+                                scanf("%d", &value);
+                                insert_at_beg(value);
+                                break;
+                            case 2:
+                                printf("Enter the value to insert: ");
+                                scanf("%d", &value);
+                                printf("Enter the position to insert at: ");
+                                scanf("%d", &position);
+                                insert_at_pos(value, position);
+                                break;
+                            case 3:
+                                printf("Enter the value to insert: ");
+                                scanf("%d", &value);
+                                insert_at_end(value);
+                                break;
+                            case 4:
+                                deleteAtBegin();
+                                break;
+                            case 5:
+                                deleteAtEnd();
+                                break;
+                            case 6:
+                                printf("Enter the position to delete from: ");
+                                scanf("%d", &position);
+                                deleteAtPos(position);
+                                break;
+                            case 7:
+                                if (is_empt())
+                                    printf("The list is empty.\n");
+                                else
+                                    printf("The list is not empty.\n");
+                                break;
+                            case 8:
+                                display();
+                                break;
+                            case 9:
+                                printf("Enter the value to search for: ");
+                                scanf("%d", &value);
+                                search(value);
+                                break;
+                            case 10:
+                                printf("Exiting the program.\n");
+                                exit(0);
+                            default:
+                                printf("Invalid choice. Please try again.\n");
+                        }
+                    }
+                
+                    return 0;
+                } 
+        </code>
+    </pre>
+</body>
+</html>

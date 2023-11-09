@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre>
+        <body style="background-color: black;">
+            <pre>
+                <code style="color:white">
+#include < stdio.h >
+
+// Size of given matrix
+#define N 3
+//you can enter what you want
+
+void scalarmul(int matrix[][N], int k)
+{
+	int i,j;
+	// scalar element is multiplied by the matrix
+	for (i = 0; i < N; i++)
+		for (j = 0; j < N; j++)
+			matrix[i][j] = matrix[i][j] * k; 
+}
+
+// Driver code
+int main()
+{
+	int input[N][N] = { { 1, 2, 3 },
+					{ 4, 5, 6 },
+					{ 7, 8, 9 } };
+	int k = 4,i,j;
+
+	scalarmul(input, k);
+
+	// to display the resultant matrix
+	printf("Scalar Product Matrix is : \n");
+	for (i = 0; i < N; i++) {
+		for (j = 0; j < N; j++)
+			printf("%d ", input[i][j]);
+		printf("\n");
+	}
+
+	return 0;
+}
+                </code>
+            </pre>
+                     
+        </code>
+    </pre>
+</body>
+</html>

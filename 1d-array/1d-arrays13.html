@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre>
+        <body style="background-color: black;">
+            <pre>
+                <code style="color:white">
+                    #include< stdio.h>
+                        #include< conio.h>
+                        int main()
+                        {
+                            int array1[10],i,j,count=0;
+                            printf("Space allocation form 10 values is granted successfully");
+                            for ( i = 0; i < 10; i++)
+                            {
+                                printf("\nEnter %d value : ",i+1);
+                                scanf("%d",&array1[i]);
+                            }
+                        
+                               for ( i = 0; i< 10; i++)
+                            {
+                                for (j  = i+1; j < 10; j++)
+                                {
+                                    if(array1[i]==array1[j])
+                                    count=count+1;
+                                }
+                                
+                            }
+                                        printf("Total duplicate values are : %d",count);
+                        
+                            return 0;
+                        }
+                        
+                        
+                        OUTPUT : - 
+                        
+                        Space allocation form 10 values is granted successfully
+                        Enter 1 value : 12
+                        Enter 2 value : 14
+                        Enter 3 value : 15
+                        Enter 4 value : 14
+                        Enter 5 value : 12
+                        Enter 6 value : 16
+                        Enter 7 value : 51
+                        Enter 8 value : 42
+                        Enter 9 value : 51
+                        Enter 10 value : 52
+                        Total duplicate values are : 3
+                </code>
+            </pre>
+                     
+        </code>
+    </pre>
+</body>
+</html>

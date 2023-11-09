@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+
+                // Function to convert decimal to binary using recursion
+                void decimalToBinary(int n) {
+                    if (n > 0) {
+                        decimalToBinary(n / 2);
+                        printf("%d", n % 2);
+                    }
+                }
+                
+                int main() {
+                    // Input a decimal number
+                    int decimalNum;
+                    printf("Enter a decimal number: ");
+                    scanf("%d", &decimalNum);
+                
+                    // Print the binary representation
+                    printf("Binary representation: ");
+                    decimalToBinary(decimalNum);
+                
+                    return 0;
+                }
+                
+
+
+
+                output
+                Enter a decimal number: 10
+                Binary representation: 1010
+
+        </code>
+    </pre>
+</body>
+</html>

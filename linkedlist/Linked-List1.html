@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                struct ll
+                {
+                    int data;
+                    struct ll *next;
+                };
+                //!-----------------------------------------------------------------------------------------------------!
+                // to insert value at starting of linked list :-
+                struct ll *insertbeg(struct ll *start, int data)
+                {
+                    struct ll *point = (struct ll *)malloc(sizeof(struct ll));
+                    point->next = start;
+                    point->data = data;
+                    return point;
+                }
+                //!-----------------------------------------------------------------------------------------------------!
+                // to insert value at a certain point which user requested :-
+                struct ll *insertindex(struct ll *start, int data, int index)
+                {
+                    struct ll *point = (struct ll *)malloc(sizeof(struct ll));
+                    struct ll *find = start;
+                    int i = 0;
+                    while (i != index - 1) // index comming from user
+                    {
+                        find = find->next; // to get to position where the next position is desired one. present+1=wanted
+                        i++;               // increment position
+                    }
+                    point->data = data;       // the new node value is set
+                    point->next = find->next; // the next address that find holds assin to the new point.
+                    find->next = point;       // now the find node will point to new point node.
+                    return start;
+                }
+                //!-----------------------------------------------------------------------------------------------------!
+                // insertion at end of the list
+                struct ll *insertend(struct ll *start, int data)
+                {
+                    struct ll *insrt = (struct ll *)malloc(sizeof(struct ll));
+                    struct ll *temp = start; // so that i do not lose my original value of head. copy head in another temp variable
+                    while (temp->next != NULL)
+                    {
+                        temp = temp->next;
+                    }
+                    insrt->data = data;
+                    temp->next = insrt;
+                    insrt->next = NULL;
+                    return start;
+                }
+                //!-----------------------------------------------------------------------------------------------------!
+                // let us discuss about deleting the nodes :;
+                
+                struct ll *deletestrt(struct ll *start)
+                {
+                    if (start == NULL)
+                    {
+                        printf("NO value found to be deleted. Insert some values first");
+                    }
+                    else
+                    {
+                        struct ll *change = start; // after changing the head we need someone to free the memory that we allocated dynamically
+                        start = start->next;       // so that now head becomes the next node of the head.
+                        free(change);
+                    }
+                    return start;
+                }
+                //!-----------------------------------------------------------------------------------------------------!
+                struct ll *deleteindx(struct ll *start, int index)
+                {
+                    int i;
+                    if (start == NULL)
+                    {
+                        printf("NO value found to be deleted. Insert some values first");
+                    }
+                    else
+                    {
+                        struct ll *find = start;      // find will help me to point to the location whose next node is needed to be free
+                        struct ll *act = start->next; // this will point where the action is happening.
+                                                      // this will also provide me the location which needs to be pointed by action-1 node
+                        for (i = 0; i < index - 1; i++)
+                        {
+                            find = find->next;
+                            act = act->next;
+                        }
+                        find->next = act->next; // now the index-1 node will point index+1 node
+                                                //  index is now free to be deleted
+                        free(act);
+                    }
+                    return start;
+                }
+                //!-----------------------------------------------------------------------------------------------------!
+                struct ll *deletend(struct ll *start)
+                {
+                    if (start == NULL)
+                    {
+                        printf("NO value found to be deleted. Insert some values first");
+                    }
+                    else
+                    {
+                        struct ll *find = start;      // find will help me to point to the location whose "next" node is needed to be free
+                        struct ll *act = start->next; // this will point where the action is happening.
+                                                      // this will also provide me the location which needs to be pointed by action-1 node
+                        while (act->next != NULL)
+                        {
+                            find = find->next;
+                            act = act->next;
+                        }
+                        find->next = NULL; // so that it becomes our last node
+                                           //  index is now free to be deleted
+                        free(act);
+                    }
+                    return start;
+                }
+                //!-----------------------------------------------------------------------------------------------------!
+                struct ll *deletebyvalue(struct ll *start, int value)
+                {
+                    if (start == NULL)
+                    {
+                        printf("NO value found to be deleted. Insert some values first");
+                    }
+                    else
+                    {
+                        struct ll *find = start;      // find will help me to point to the location whose next node is needed to be free
+                        struct ll *act = start->next; // this will point where the action is happening.
+                                                      // this will also provide me the location which needs to be pointed by action-1 node
+                        while (act->data != value && act->next != NULL)
+                        // 1. fisrt condition checks if my value is equal to data
+                        // 2. second one checks whether i have reaached the end of my code. If that happens quit searching!!!
+                        {
+                            find = find->next;
+                            act = act->next;
+                        }
+                
+                        if (act->data == value)
+                        {
+                            find->next = act->next;
+                            // now find will point to the next node which was previously pointed by action (act) node.
+                            free(act);
+                        }
+                    }
+                    return start;
+                }
+                //!-----------------------------------------------------------------------------------------------------!
+                // print the linked list
+                void traverse(struct ll *point)
+                {
+                    if (point == NULL)
+                    {
+                        printf("NO value found to print. Insert some values first");
+                    }
+                    else
+                    {
+                        while (point != NULL)
+                        {
+                            printf("%d, ", point->data);
+                            point = point->next;
+                        }
+                    }
+                }
+                //!-----------------------------------------------------------------------------------------------------!
+                //!-----------------------------------------------------------------------------------------------------!
+                
+                void main()
+                {
+                    char val[30];
+                    char indx[100];
+                    int value, index;
+                    struct ll *start = NULL;
+                    // printf("Enter the value to be inserted : ");
+                    // scanf("%d",&val);
+                    // start=insertbeg(start,val);
+                    /*start = insertbeg(start, 100);
+                    start = insertbeg(start, 50);
+                    start = insertbeg(start, 70);
+                    start = insertbeg(start, 200);
+                    start = insertbeg(start, 60);
+                    start = insertindex(start, 72, 3);
+                    start = insertindex(start, 1234, 2);
+                    start = insertend(start, 997);
+                    start = insertend(start, 998);
+                    start = insertend(start, 999);
+                    start = deletestrt(start);
+                    start = deleteindx(start, 4);
+                    start = deletend(start);
+                    start = deletebyvalue(start, 997);
+                    traverse(start);
+                    */
+                    char choice;
+                    printf("Choose the option given below :- \n");
+                    do
+                    {
+                        printf("\n1.To insert node at the beginning of the linked list\n");
+                        printf("2.To insert node at a given index of the linked list\n");
+                        printf("3.To insert node at the end of the linked list\n");
+                        printf("4.To delete node from the beginning of the linked list\n");
+                        printf("5.To delete node from a given index of the linked list\n");
+                        printf("6.To delete node from the end of the linked list\n");
+                        printf("7.To delete node by a given value in the linked list\n");
+                        printf("8.To see your linked list\n");
+                        printf("9.To terminate the program\n");
+                        printf("\n\nEnter your choice : ");
+                        choice = getche();
+                        printf("\n");
+                        switch (choice)
+                        {
+                        case '1':
+                            printf("Enter the value you want to enter : ");
+                            scanf("%s", val);
+                            value = atoi(val);
+                            start = insertbeg(start, value);
+                            break;
+                        case '2':
+                            printf("Enter the value you want to enter : ");
+                            scanf("%s", val);
+                            value = atoi(val);
+                            printf("\nEnter the index  : ");
+                
+                            scanf("%s", indx);
+                            index = atoi(indx);
+                            start = insertindex(start, value, index);
+                            break;
+                        case '3':
+                            printf("Enter the value you want to enter : ");
+                            scanf("%s", val);
+                            value = atoi(val);
+                            start = insertend(start, value);
+                            break;
+                        case '4':
+                            start = deletestrt(start);
+                            break;
+                        case '5':
+                            printf("\nEnter the index  : ");
+                            scanf("%s", indx);
+                            index = atoi(indx);
+                            start = deleteindx(start, index);
+                
+                            break;
+                        case '6':
+                            start = deletend(start);
+                
+                            break;
+                        case '7':
+                            printf("Enter the value you want to delete : ");
+                            scanf("%s", val);
+                            value = atoi(val);
+                            start = deletebyvalue(start, value);
+                
+                            break;
+                        case '8':
+                            traverse(start);
+                
+                            break;
+                        case '9':
+                            printf("\n program terminated successfully");
+                            break;
+                        default:
+                            printf("\nEnter a valid choice");
+                            break;
+                        }
+                    } while (choice != '9');
+                    printf("\nPLEASE GIVE US ANY FEEDBACK IF YOU WANT!!!!");
+                }  
+        </code>
+    </pre>
+</body>
+</html>

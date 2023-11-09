@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+
+                // Function to calculate the sum of elements in an array using recursion
+                int arraySum(int arr[], int size) {
+                    if (size == 0) {
+                        return 0;
+                    } else {
+                        return arr[0] + arraySum(arr + 1, size - 1);
+                    }
+                }
+                
+                // Function to find the arithmetic mean of an array using recursion
+                double arrayMean(int arr[], int size) {
+                    if (size == 0) {
+                        return 0.0;
+                    } else {
+                        return (double)arraySum(arr, size) / size;
+                    }
+                }
+                
+                int main() {
+                    // Input the size of the array
+                    int size;
+                    printf("Enter the size of the array: ");
+                    scanf("%d", &size);
+                
+                    // Input the elements of the array
+                    int arr[size];
+                    printf("Enter %d elements of the array:\n", size);
+                    for (int i = 0; i < size; ++i) {
+                        scanf("%d", &arr[i]);
+                    }
+                
+                    // Find and print the arithmetic mean of the array
+                    double mean = arrayMean(arr, size);
+                    printf("Arithmetic mean of the array = %.2f\n", mean);
+                
+                    return 0;
+                }
+
+
+
+                output.
+                Enter the size of the array: 5
+                Enter 5 elements of the array:
+                10 20 30 40 50
+                Arithmetic mean of the array = 30.00
+
+                
+        </code>
+    </pre>
+</body>
+</html>

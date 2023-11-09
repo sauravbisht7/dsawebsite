@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+
+                #define MAX_SIZE 5
+                
+                int circular_q[MAX_SIZE];
+                int front = -1, rear = -1;
+                
+                //if the circular queue is empty
+                int is_empty() {
+                    return (front == -1);
+                }
+                
+                //if the circular queue is full
+                int is_full() {
+                    return (front == (rear + 1) % MAX_SIZE);
+                    //It checks if the rear pointer is one position ahead of the front pointer,
+                    // which indicates that all slots in the circular queue are occupied,
+                    // and it's indeed full.
+                    //It ensures that when the pointer reaches the end, 
+                    //it wraps around to the beginning index (index 0 in this case).
+                }
+                
+                // insert (enqueue) an elementin circular queue
+                void insert(int value) {
+                    if (is_full()) {
+                        printf("Circular Queue is full. Cannot insert.\n");
+                    } else {
+                        if (front == -1) {//initial stage, i.e calling first time
+                            front = rear = 0;//update both front and back
+                        } else if (rear == MAX_SIZE - 1) {//meaning queue has reached it's end
+                            rear = 0;//upadte it to make it's behaviour circular
+                        } else {
+                            rear++;//just update by 1
+                        }
+                        circular_q[rear] = value;
+                        printf("Inserted: %d\n", value);
+                    }
+                }
+                
+                // Function to delete (dequeue) an element from the circular queue
+                void delete() {
+                    if (is_empty()) {
+                        printf("Circular Queue is empty. Cannot delete.\n");
+                    } else {
+                        printf("Deleted: %d\n", circular_q[front]);
+                        if (front == rear) {
+                            front = rear = -1;// set them to initial stage
+                        } else if (front == MAX_SIZE - 1) {//after last position let it go to the firat one
+                            front = 0;//i==0
+                        } else {
+                            front++;
+                        }
+                    }
+                }
+                
+                //peek at the front element
+                int peek() {
+                    if (is_empty()) {
+                        printf("Circular Queue is empty. Cannot peek.\n");
+                        return -1; 
+                    }
+                    return circular_q[front];
+                }
+                
+                // Function to display the menu and get the user's choice
+                int getMenuChoice() {
+                    int choice;
+                    printf("\nMenu:\n");
+                    printf("1. Insert (Enqueue)\n");
+                    printf("2. Delete (Dequeue)\n");
+                    printf("3. Peek\n");
+                    printf("4. Exit\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &choice);
+                    return choice;
+                }
+                
+                int main() {
+                    int choice, value;
+                
+                    while (1) {
+                        choice = getMenuChoice();
+                
+                        switch (choice) {
+                            case 1:
+                                printf("Enter an integer to insert into the circular queue: ");
+                                scanf("%d", &value);
+                                insert(value);
+                                break;
+                            case 2:
+                                delete();
+                                break;
+                            case 3:
+                                printf("Front element: %d\n", peek());
+                                break;
+                            case 4:
+                                // Clean up and exit
+                                while (!is_empty()) {
+                                    delete();
+                                }
+                                return 0;
+                            default:
+                                printf("Invalid choice. Please try again.\n");
+                        }
+                    }
+                
+                    return 0;
+                }             
+        </code>
+    </pre>
+</body>
+</html>

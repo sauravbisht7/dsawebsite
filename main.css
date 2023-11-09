@@ -1,0 +1,45 @@
+.box-element{
+	box-shadow:hsl(0, 0%, 80%) 0 0 16px;
+	background-color: #fff;
+	border-radius: 4px;
+	padding: 10px;
+    height: 300px;
+    margin-top:50px;
+}
+
+
+.box-element:hover{
+	box-shadow:hsl(0, 6%, 61%) 0 0 16px;
+	background-color: #fff;
+	border-radius: 4px;
+	padding: 10px;
+
+    margin-top:50px;
+}
+
+/* .title-div{
+    background-color: rgb(169, 207, 207);
+} */
+
+
+.center-title{
+    text-align: center;
+}
+
+.topic-pic{
+    height:200px;
+    width:330px;
+}
+
+.topic-link{
+    text-decoration: none;
+    color: black;
+}
+
+body{
+    background-image: url('images/bgimage.jpg');
+}
+
+.container{
+    margin-bottom: 100px;
+}

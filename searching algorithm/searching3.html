@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+
+                int l_ary_recur(int source[], int target, int index, int size) {
+                    if (index >= size) {
+                        return -1;  // integer value not found in the array as the index exceeds size
+                    }
+                    if (source[index] == target) {
+                        return index;  // integer value found at the current index pass it to main
+                    }
+                    return l_ary_recur(source, target, index + 1, size);  // recur occurs with next index
+                }
+                
+                int main() {
+                    int arr[100];  // Define an integer array to store the input
+                    int target, size;
+                    int i;
+                    printf("Enter the size of the array: ");
+                    scanf("%d", &size);
+                
+                
+                    printf("Enter the elements of the array, one by one:\n");
+                    for (i = 0; i < size; i++) {
+                        printf("value %d : ",i+1);
+                        scanf("%d", &arr[i]);
+                    }
+                
+                    printf("Enter an integer value to search for: ");
+                    scanf("%d", &target);
+                
+                    int index = l_ary_recur(arr, target, 0, size);
+                
+                    if (index != -1) {
+                        printf("Integer value %d found at index %d in the array.\n", target, index+1);
+                    } else {
+                        printf("Integer value %d not found in the array.\n", target);
+                    }
+                
+                    return 0;
+                }           
+        </code>
+    </pre>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                #include < string.h>
+                
+                #define MAX_SIZE 10
+                #define STRING_LENGTH 50
+                
+                char priority_q[MAX_SIZE][STRING_LENGTH];
+                int priorities[MAX_SIZE];
+                int size = 0;
+                
+                // Function to check if the priority queue is empty
+                int isEmpty() {
+                    return size == 0;
+                }
+                
+                // Function to check if the priority queue is full
+                int isFull() {
+                    return size == MAX_SIZE;
+                }
+                
+                // Function to insert an element into the priority queue
+                void insert(char value[], int priority) {
+                    if (isFull()) {
+                        printf("Priority Queue is full. Cannot insert.\n");
+                    } else {
+                        int i = size - 1;
+                        while (i >= 0 && priorities[i] > priority) {
+                            strcpy(priority_q[i + 1], priority_q[i]);
+                            priorities[i + 1] = priorities[i];
+                            i--;
+                        }
+                        strcpy(priority_q[i + 1], value);
+                        priorities[i + 1] = priority;
+                        size++;
+                        printf("Inserted: %s with priority %d\n", value, priority);
+                    }
+                }
+                
+                // Function to delete the element with the highest priority from the priority queue
+                void delete() {
+                    if (isEmpty()) {
+                        printf("Priority Queue is empty. Cannot delete.\n");
+                    } else {
+                        printf("Deleted: %s with priority %d\n", priority_q[0], priorities[0]);
+                        for (int i = 1; i < size; i++) {
+                            strcpy(priority_q[i - 1], priority_q[i]);
+                            priorities[i - 1] = priorities[i];
+                        }
+                        size--;
+                    }
+                }
+                
+                // Function to peek at the element with the highest priority
+                char* peek() {
+                    static char result[STRING_LENGTH];
+                    strcpy(result, ""); // Default value if the queue is empty
+                
+                    if (!isEmpty()) {
+                        strcpy(result, priority_q[0]);
+                    }
+                
+                    return result;
+                }
+                
+                // Function to display the menu and get the user's choice
+                int getMenuChoice() {
+                    int choice;
+                    printf("\nMenu:\n");
+                    printf("1. Insert\n");
+                    printf("2. Delete (highest priority)\n");
+                    printf("3. Peek (highest priority)\n");
+                    printf("4. Check if Empty\n");
+                    printf("5. Check if Full\n");
+                    printf("6. Exit\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &choice);
+                    return choice;
+                }
+                
+                int main() {
+                    int choice, priority;
+                    char input_string[STRING_LENGTH];
+                    char* element;
+                
+                    while (1) {
+                        choice = getMenuChoice();
+                
+                        switch (choice) {
+                            case 1:
+                                printf("Enter a string to insert into the priority queue: ");
+                                scanf("%s", input_string);
+                                printf("Enter the priority for this element: ");
+                                scanf("%d", &priority);
+                                insert(input_string, priority);
+                                break;
+                            case 2:
+                                delete();
+                                break;
+                            case 3: {
+                                element = peek();
+                                if (strcmp(element, "") != 0) {
+                                    printf("Element with highest priority: %s\n", element);
+                                } else {
+                                    printf("Priority Queue is empty. Cannot peek.\n");
+                                }
+                                break;
+                            }
+                            case 4:
+                                if (isEmpty()) {
+                                    printf("Priority Queue is empty.\n");
+                                } else {
+                                    printf("Priority Queue is not empty.\n");
+                                }
+                                break;
+                            case 5:
+                                if (isFull()) {
+                                    printf("Priority Queue is full.\n");
+                                } else {
+                                    printf("Priority Queue is not full.\n");
+                                }
+                                break;
+                            case 6:
+                                return 0;
+                            default:
+                                printf("Invalid choice. Please try again.\n");
+                        }
+                    }
+                
+                    return 0;
+                }            
+        </code>
+    </pre>
+</body>
+</html>

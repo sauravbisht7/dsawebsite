@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < conio.h>
+                #include< time.h>
+                int search(int ary[], int size, int key)
+                {
+                    int mid,loc=-1,lb=0,up=size-1;
+                    while (lb< up)
+                    {
+                        mid=(lb+up)/2;
+                        if (ary[mid]==key)
+                        {
+                            loc=mid;
+                            break;
+                        }
+                        else if (key< ary[mid])
+                        {
+                            up=mid-1;
+                        }
+                        else
+                        lb=mid+1;
+                    }
+                    return loc;
+                }
+                
+                int bubble(int ary[], int size)
+                {
+                    int i,j,temp;
+                    for ( i = size-1; i >0; i--)
+                    {
+                        for ( j= 0; j <= i; j++)
+                        {
+                            if (ary[j]>ary[j+1])
+                            {
+                                temp=ary[j];
+                                ary[j]=ary[j+1];
+                                ary[j+1]=temp;
+                            }
+                            
+                        }
+                        
+                    }
+                    return 0;
+                    
+                }
+                
+                void main()
+                {
+                    int ary[10], i, count, loc, num;
+                    printf("Enter your array size : ");
+                    scanf("%d", &count);
+                    for (i = 0; i < count; i++)
+                    {
+                        printf("\nEnter %d value : ", i + 1);
+                        scanf("%d", &ary[i]);
+                    }
+                
+                    printf("\nEnter the number you want to search : ");
+                    scanf("%d", &num);
+                    clock_t start=clock();
+                    bubble(ary,count);
+                    loc = search(ary, count, num);
+                    clock_t end=clock();
+                    double time_complexity=((double)(end-start))/CLOCKS_PER_SEC;
+                    if (loc == -1)
+                    {
+                        printf("\nElement not found in array.");
+                    }
+                    else
+                    {
+                        printf("Element found at position  : %d", loc + 1);
+                    }
+                    printf("\nTime complexity is : %f",time_complexity);
+                }             
+        </code>
+    </pre>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                
+                struct circular_ll
+                {
+                    int data;
+                    struct circular_ll *prev;
+                    struct circular_ll *next;
+                };
+                
+                struct circular_ll *head = NULL;
+                
+                // Function to check if the list is empty
+                int is_empty()
+                {
+                    return head == NULL;
+                }
+                
+                // Function to display the elements of the list
+                void display()
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty.\n");
+                        return;
+                    }
+                
+                    struct circular_ll *current = head;
+                
+                    do
+                    {
+                        printf("%d -> ", current->data);
+                        current = current->next;
+                    } while (current != head);
+                
+                    printf("NULL\n");
+                }
+                
+                // Function to insert a node at the beginning of the list
+                void insert_at_begin(int value)
+                {
+                    struct circular_ll *nn = (struct circular_ll *)malloc(sizeof(struct circular_ll));
+                    nn->data = value;
+                
+                    if (head == NULL)
+                    { // initial
+                        head = nn;
+                        nn->next = nn; // circular nature, point itself
+                        nn->prev = nn;
+                    }
+                    else
+                    {
+                        nn->next = head;       // as it is being placed at top i.e beginning
+                        nn->prev = head->prev; // newnode's previous will point the last node that was being
+                        // pointed by head
+                        head->prev->next = nn; // head goes to prev element and after the next pointer of that node
+                        // node that was previously pointed by head,of that node
+                        //  the next pointer of that node will now point to nn i.e new node inserted
+                        head->prev = nn; // previous pointer of head will point to the nn inserted
+                        head = nn;       // so that we can traverse from 1st element so make nn head
+                    }
+                
+                    printf("%d inserted at the beginning.\n", value);
+                }
+                
+                // Function to insert a node at a specified position
+                void insert_at_pos(int value, int position)
+                {
+                    if (position < 1)
+                    {
+                        printf("Invalid position.\n");
+                        return;
+                    }
+                
+                    struct circular_ll *nn = (struct circular_ll *)malloc(sizeof(struct circular_ll));
+                    nn->data = value;
+                
+                    if (head == NULL || position == 1)
+                    {
+                        insert_at_begin(value);
+                        return;
+                    }
+                
+                    struct circular_ll *current = head; // to traverse
+                    int count = 1;                      // will tell us index
+                
+                    while (count < position - 1 && current->next != head)
+                    {
+                        current = current->next;
+                        count++;
+                    }
+                
+                    nn->next = current->next;
+                    nn->prev = current;
+                    // after this node is inserted
+                    // all we have to do now is cut off the extra pointing links
+                    current->next->prev = nn; // now the next node's previous pointer will point to nn
+                    current->next = nn;       // and current will point to nn not next element
+                
+                    printf("%d inserted at position %d.\n", value, position);
+                }
+                
+                // Function to insert a node at the end of the list
+                void insert_at_end(int value)
+                {
+                    if (head == NULL)
+                    {
+                        insert_at_begin(value);
+                        return;
+                    }
+                
+                    struct circular_ll *nn = (struct circular_ll *)malloc(sizeof(struct circular_ll));
+                    nn->data = value;
+                    // i don't think this needs to be explained, we ahve already done this alot of times now
+                    nn->next = head;
+                    nn->prev = head->prev;
+                    head->prev->next = nn;
+                    head->prev = nn;
+                
+                    printf("%d inserted at the end.\n", value);
+                }
+                
+                // delete from beg
+                void delete_from_start()
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    struct circular_ll *temp = head;
+                
+                    if (head->next == head)
+                    {                // as there is only on eelement
+                        head = NULL; // empty
+                    }
+                    else
+                    {
+                        head->prev->next = head->next;
+                        head->next->prev = head->prev;
+                        head = head->next; // don't forget ot update next before removing head
+                        // otherwise you will loose head
+                    }
+                
+                    free(temp);
+                    printf("Deleted from the beginning.\n");
+                }
+                
+                // del from end
+                void delete_from_end()
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    if (head->next == head)
+                    { // single element
+                        free(head);
+                        head = NULL;
+                    }
+                    else
+                    {
+                        struct circular_ll *temp = head->prev; // last element o list
+                        temp->prev->next = head;               // secondlast's next pointer will now point to head not the temp
+                        head->prev = temp->prev;               // head's previous will now point last node's previous
+                        free(temp);
+                    }
+                
+                    printf("Deleted from the end.\n");
+                }
+                
+                // Function to delete a node from a specified position
+                void delete_from_pos(int position)
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Nothing to delete.\n");
+                        return;
+                    }
+                
+                    if (position < 1)
+                    {
+                        printf("Invalid position.\n");
+                        return;
+                    }
+                
+                    if (position == 1)
+                    {
+                        delete_from_start();
+                        return;
+                    }
+                
+                    struct circular_ll *del = head;
+                    int count = 1;
+                
+                    while (count < position && del->next != head)
+                    {
+                        del = del->next;
+                        count++;
+                    }
+                
+                    if (count < position)
+                    {
+                        printf("Position not found in the list.\n");
+                        return;
+                    }
+                    // del is the pointer needed to be delete
+                    del->prev->next = del->next;
+                    del->next->prev = del->prev;
+                    free(del);
+                
+                    printf("Deleted from position %d.\n", position);
+                }
+                
+                // Function to search for a value in the list
+                int search(int value)
+                {
+                    if (is_empty())
+                    {
+                        printf("The list is empty. Cannot search.\n");
+                        return 0;
+                    }
+                
+                    struct circular_ll *current = head;
+                    int position = 1;
+                
+                    do
+                    {
+                        if (current->data == value)
+                        {
+                            printf("%d found at position %d.\n", value, position);
+                            return 1;
+                        }
+                        current = current->next;
+                        position++;
+                    } while (current != head);
+                
+                    printf("%d not found in the list.\n", value);
+                    return 0;
+                }
+                
+                int main()
+                {
+                    int choice, value, position;
+                
+                    while (1)
+                    {
+                        printf("\nDoubly Circular Linked List Operations:\n");
+                        printf("1. Insert at the beginning\n");
+                        printf("2. Insert at a specific position\n");
+                        printf("3. Insert at the end\n");
+                        printf("4. Delete from the beginning\n");
+                        printf("5. Delete from the end\n");
+                        printf("6. Delete from a specific position\n");
+                        printf("7. Check if the list is empty\n");
+                        printf("8. Display the list\n");
+                        printf("9. Search for an element\n");
+                        printf("10. Exit\n");
+                        printf("Enter your choice: ");
+                        scanf("%d", &choice);
+                
+                        switch (choice)
+                        {
+                        case 1:
+                            printf("Enter the value to insert: ");
+                            scanf("%d", &value);
+                            insert_at_begin(value);
+                            break;
+                        case 2:
+                            printf("Enter the value to insert: ");
+                            scanf("%d", &value);
+                            printf("Enter the position to insert at: ");
+                            scanf("%d", &position);
+                            insert_at_pos(value, position);
+                            break;
+                        case 3:
+                            printf("Enter the value to insert: ");
+                            scanf("%d", &value);
+                            insert_at_end(value);
+                            break;
+                        case 4:
+                            delete_from_start();
+                            break;
+                        case 5:
+                            delete_from_end();
+                            break;
+                        case 6:
+                            printf("Enter the position to delete from: ");
+                            scanf("%d", &position);
+                            delete_from_pos(position);
+                            break;
+                        case 7:
+                            if (is_empty())
+                                printf("The list is empty.\n");
+                            else
+                                printf("The list is not empty.\n");
+                            break;
+                        case 8:
+                            display();
+                            break;
+                        case 9:
+                            printf("Enter the value to search for: ");
+                            scanf("%d", &value);
+                            search(value);
+                            break;
+                        case 10:
+                            printf("Exiting the program.\n");
+                            exit(0);
+                        default:
+                            printf("Invalid choice. Please try again.\n");
+                        }
+                    }
+                
+                    return 0;
+                } 
+        </code>
+    </pre>
+</body>
+</html>

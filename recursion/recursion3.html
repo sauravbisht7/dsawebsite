@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+
+                // Function to calculate the sum of natural numbers using recursion
+                int sumOfNaturalNumbers(int n) {
+                    if (n == 0) {
+                        return 0;
+                    } else {
+                        return n + sumOfNaturalNumbers(n - 1);
+                    }
+                }
+                
+                int main() {
+                    // Calculate and print the sum of natural numbers till 10
+                    int result = sumOfNaturalNumbers(10);
+                    printf("Sum of natural numbers till 10: %d\n", result);
+                
+                    return 0;
+                }
+
+
+
+
+
+
+
+                output
+                Sum of natural numbers till 10: 55
+
+                  
+        </code>
+    </pre>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                #include < string.h>
+                
+                #define MAX_QUEUE_SIZE 100
+                
+                // Structure to represent a single element in the priority queue
+                typedef struct {
+                    int priority;
+                    char* data;
+                } QueueElement;
+                
+                // Structure to represent the priority queue
+                typedef struct {
+                    QueueElement* elements;
+                    int size;
+                    int capacity;
+                } PriorityQueue;
+                
+                // Function to create an empty priority queue
+                PriorityQueue* createPriorityQueue(int maxElements) {
+                    PriorityQueue* queue = (PriorityQueue*)malloc(sizeof(PriorityQueue));
+                    if (queue == NULL) {
+                        perror("Memory allocation failed");
+                        exit(EXIT_FAILURE);
+                    }
+                    queue->capacity = maxElements;
+                    queue->size = 0;
+                    queue->elements = (QueueElement*)malloc(maxElements * sizeof(QueueElement));
+                    if (queue->elements == NULL) {
+                        perror("Memory allocation failed");
+                        exit(EXIT_FAILURE);
+                    }
+                    return queue;
+                }
+                
+                // Function to check if the priority queue is empty
+                int isEmpty(PriorityQueue* queue) {
+                    return (queue->size == 0);
+                }
+                
+                // Function to check if the priority queue is full
+                int isFull(PriorityQueue* queue) {
+                    return (queue->size == queue->capacity);
+                }
+                
+                // Function to insert an element with a given priority into the priority queue
+                void insert(PriorityQueue* queue, char* data, int priority) {
+                    if (isFull(queue)) {
+                        printf("Queue is full. Cannot insert.\n");
+                        return;
+                    }
+                    
+                    QueueElement newElement;
+                    newElement.priority = priority;
+                    newElement.data = strdup(data);
+                
+                    int i = queue->size;
+                    while (i > 0 && queue->elements[(i - 1) / 2].priority > priority) {
+                        queue->elements[i] = queue->elements[(i - 1) / 2];
+                        i = (i - 1) / 2;
+                    }
+                
+                    queue->elements[i] = newElement;
+                    queue->size++;
+                }
+                
+                // Function to delete the element with the highest priority from the priority queue
+                void delete(PriorityQueue* queue) {
+                    if (isEmpty(queue)) {
+                        printf("Queue is empty. Cannot delete.\n");
+                        return;
+                    }
+                
+                    free(queue->elements[0].data);
+                
+                    queue->size--;
+                    queue->elements[0] = queue->elements[queue->size];
+                    int i = 0;
+                    int left, right, smallest;
+                
+                    while (1) {
+                        left = 2 * i + 1;
+                        right = 2 * i + 2;
+                        smallest = i;
+                
+                        if (left < queue->size && queue->elements[left].priority < queue->elements[smallest].priority) {
+                            smallest = left;
+                        }
+                
+                        if (right < queue->size && queue->elements[right].priority < queue->elements[smallest].priority) {
+                            smallest = right;
+                        }
+                
+                        if (smallest != i) {
+                            QueueElement temp = queue->elements[i];
+                            queue->elements[i] = queue->elements[smallest];
+                            queue->elements[smallest] = temp;
+                            i = smallest;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                
+                // Function to peek at the element with the highest priority in the priority queue
+                void peek(PriorityQueue* queue) {
+                    if (isEmpty(queue)) {
+                        printf("Queue is empty. Cannot peek.\n");
+                        return;
+                    }
+                    printf("Peek: Priority = %d, Data = %s\n", queue->elements[0].priority, queue->elements[0].data);
+                }
+                
+                // Function to free the memory used by the priority queue
+                void destroyPriorityQueue(PriorityQueue* queue) {
+                    for (int i = 0; i < queue->size; i++) {
+                        free(queue->elements[i].data);
+                    }
+                    free(queue->elements);
+                    free(queue);
+                }
+                
+                int main() {
+                    PriorityQueue* queue = createPriorityQueue(MAX_QUEUE_SIZE);
+                
+                    insert(queue, "Apple", 2);
+                    insert(queue, "Banana", 1);
+                    insert(queue, "Cherry", 3);
+                
+                    peek(queue);
+                
+                    delete(queue);
+                    peek(queue);
+                
+                    destroyPriorityQueue(queue);
+                
+                    return 0;
+                }
+                                       
+        </code>
+    </pre>
+</body>
+</html>

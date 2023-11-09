@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                //as binary search works on sorted array 
+                //we should use bubbble_sort to sort it first.
+                //to get the correct output.
+                void bbl_sort(char string[], int length) {
+                    int i,j;
+                    char temp;
+                    for (i = 0; i < length - 1; i++) {
+                        for (j = 0; j < length - i - 1; j++) {
+                            if (string[j] > string[j + 1]) {
+                                // Swap the characters if they are in the wrong order
+                                temp = string[j];
+                                string[j] = string[j + 1];
+                                string[j + 1] = temp;
+                            }
+                        }
+                    }
+                }
+                
+                int binary_srch_strng(char string[], char key, int left, int right) {
+                    if (left > right) {
+                        return -1; // Character not found in the string
+                    }
+                
+                    int mid = left + (right - left) / 2;
+                
+                    if (string[mid] == key) {
+                        return mid; // Found the character at position 'mid'
+                    } else if (string[mid] < key) {
+                        return binary_srch_strng(string, key, mid + 1, right);
+                    } else {
+                        return binary_srch_strng(string, key, left, mid - 1);
+                    }
+                }
+                
+                int main() {
+                    char input[100];
+                    char key;
+                    int position,length=0,i;
+                
+                    printf("Enter a string: ");
+                    gets(input);
+                
+                    printf("Enter a character to search for: ");
+                    scanf(" %c", &key);
+                
+                    //find length
+                    for ( i = 0; input[i] != '\0'; i++)
+                    {
+                        length++;
+                    }
+                    printf("\nLenght of string is : %d",length);
+                    // Sort the input string using Bubble Sort
+                    bbl_sort(input, length);
+                    printf("\nArray ater forting is : ");
+                    for ( i = 0; i < length; i++)
+                    {
+                        printf("%c ",input[i]);
+                    }
+                    
+                    position = binary_srch_strng(input, key,0,length-1);
+                
+                    if (position != -1) {
+                        printf("\nCharacter '%c' found at position %d in the sorted string.\n", key, position+1);
+                    } else {
+                        printf("\nCharacter '%c' not found in the sorted string.\n", key);
+                    }
+                
+                    return 0;
+                }              
+        </code>
+    </pre>
+</body>
+</html>

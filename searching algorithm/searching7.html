@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < conio.h>
+                
+                int b_srch_recur(int ary[], int key,int lb,int up)
+                {
+                    int mid;
+                    if (lb> up) {
+                        return -1; // Element not found
+                    }
+                        mid=(lb+up)/2;
+                        if (ary[mid]==key)
+                        {
+                            return mid;
+                        }
+                        else if (key>ary[mid])
+                        {
+                            return b_srch_recur(ary, key, mid + 1, up);
+                        }
+                        else
+                            return b_srch_recur(ary, key, lb, mid - 1); 
+                }
+                
+                int bubble(int ary[], int size)
+                {
+                    int i,j,temp;
+                    for ( i = size-1; i >0; i--)
+                    {
+                        for ( j= 0; j <= i; j++)
+                        {
+                            if (ary[j]>ary[j+1])
+                            {
+                                temp=ary[j];
+                                ary[j]=ary[j+1];
+                                ary[j+1]=temp;
+                            }
+                            
+                        }
+                        
+                    }
+                    return 0;
+                    
+                }
+                
+                void main()
+                {
+                    int ary[10], i, count, loc, num;
+                    printf("Enter your array size : ");
+                    scanf("%d", &count);
+                    for (i = 0; i < count; i++)
+                    {
+                        printf("\nEnter %d value : ", i + 1);
+                        scanf("%d", &ary[i]);
+                    }
+                
+                    printf("\nEnter the number you want to search : ");
+                    scanf("%d", &num);
+                    bubble(ary,count);
+                    //as binary search works on sorted array
+                    printf("\nArray after sorting : \n");
+                    for (i = 0; i < count; i++)
+                    {
+                        printf("%d\t",ary[i]);
+                    }
+                    loc = b_srch_recur(ary, num,0,count-1);
+                    if (loc == -1)
+                    {
+                        printf("\nElement not found in array.");
+                    }
+                    else
+                    {
+                        printf("Element found at position  : %d", loc + 1);
+                    }
+                }              
+        </code>
+    </pre>
+</body>
+</html>

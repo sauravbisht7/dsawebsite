@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include< stdio.h>
+
+                int solution(int ary[],int size,int ans)
+                {
+                    if(size< 2)
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                    // things we need in this program.
+                    int lmax[size],rmax[size],i,temp,smaller=0;
+                    lmax[0]=ary[0];
+                    rmax[size-1]=ary[size-1];
+                
+                    //let us find the array in which the building with greater floors exists. but from, left to right
+                
+                    for ( i = 1; i < size; i++)
+                    {
+                        if(ary[i]>lmax[i-1])
+                        temp=ary[i];
+                        else
+                        temp=lmax[i-1];
+                        lmax[i]=temp;
+                    }
+                
+                        //let us find the array in which the building with greater floors exists. but from, right to left
+                    //loop will also work bakwards. Point to remember
+                
+                      for ( i = size-2; i >= 0; i--) //Question : why is size -2??
+                      // we cannot compare last value meaning index == size-1. so size-2 will come before size-1 
+                    {
+                        if(ary[i]>rmax[i+1])
+                        temp=ary[i];
+                        else
+                        temp=rmax[i+1];
+                        rmax[i]=temp;
+                    }
+                
+                
+                    //let us compare the both new array. Left max = lmax ------ and Right max = rmax
+                    //our aim is to find out which building is smaller.
+                    //and then, we will reduce the building size to get the actual number of places which holds water. 
+                    for ( i = 0; i < size; i++)
+                    {
+                        if(lmax[i]< rmax[i])
+                        smaller= (lmax[i]-ary[i]);   
+                        else
+                        smaller= (rmax[i]-ary[i]); 
+                
+                        ans = ans+smaller;  
+                    }
+                    return ans;
+                    }
+                    
+                }
+                void main()
+                {
+                   int input[10],i,value,ans=0;
+                   printf("How many values you want to enter : ");
+                   scanf("%d",&value);
+                   printf("Enter the floors of buildings : ");
+                   for ( i = 0; i < value; i++)
+                   {
+                    printf("Numbers of floor in %d building : ",i+1);
+                    scanf("%d",&input[i]);
+                   }
+                
+                   ans=solution(input,value,ans);  
+                   printf("Storage is : %d",ans);
+                }
+                
+                OUTPUT : - 
+                
+                How many values you want to enter : 6
+                Enter the floors of buildings : Numbers of floor in 1 building : 12
+                Numbers of floor in 2 building : 4
+                Numbers of floor in 3 building : 8
+                Numbers of floor in 4 building : 6
+                Numbers of floor in 5 building : 7
+                Numbers of floor in 6 building : 5
+                Storage is : 5    
+        </code>
+    </pre>
+</body>
+</html>

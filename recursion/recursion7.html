@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+
+                // Function to add all digits of a number using recursion
+                int sumOfDigits(int n) {
+                    if (n == 0) {
+                        return 0;
+                    } else {
+                        return n % 10 + sumOfDigits(n / 10);
+                    }
+                }
+                
+                int main() {
+                    // Input a number from the user
+                    int num;
+                    printf("Enter a number: ");
+                    scanf("%d", &num);
+                
+                    // Calculate and print the sum of digits
+                    int result = sumOfDigits(num);
+                    printf("Sum of digits of %d = %d\n", num, result);
+                
+                    return 0;
+                }
+
+
+
+                OUTPUT
+                Enter a number: 12345
+                Sum of digits of 12345 = 15
+
+                
+        </code>
+    </pre>
+</body>
+</html>

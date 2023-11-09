@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                
+                struct subt
+                {
+                    int coefficient;
+                    int exponent;
+                    struct subt *next;
+                };
+                
+                typedef struct subt subt;
+                
+                subt *get_eq(subt *head, int coeff, int expo)
+                {
+                    subt *newNode = (subt *)malloc(sizeof(subt));
+                    newNode->coefficient = coeff;
+                    newNode->exponent = expo;
+                    newNode->next = head;
+                    return newNode;
+                }
+                
+                subt *subt_eq(subt *eq1, subt *eq2)
+                {
+                    int sum_coeff;
+                    subt *result = NULL;
+                
+                    while (eq1 != NULL && eq2 != NULL)//as long as there is element left
+                    {
+                        sum_coeff = eq2->coefficient - eq1->coefficient;
+                        result = get_eq(result, sum_coeff, eq1->exponent);
+                        eq1 = eq1->next;
+                        eq2 = eq2->next;
+                    }
+                
+                    // Append any remaining terms from eq1
+                    while (eq1 != NULL)
+                    {
+                        result = get_eq(result, eq1->coefficient, eq1->exponent);
+                        eq1 = eq1->next;
+                    }
+                
+                    // Append any remaining terms from eq2
+                    while (eq2 != NULL)
+                    {
+                        result = get_eq(result, eq2->coefficient, eq2->exponent);
+                        eq2 = eq2->next;
+                    }
+                
+                    return result;
+                }
+                
+                void print(subt *poly)
+                {
+                    if (poly == NULL)
+                    {
+                        printf("0\n");
+                        return;
+                    }
+                
+                    while (poly != NULL)
+                    {
+                        printf("%dx^%d", poly->coefficient, poly->exponent);
+                        poly = poly->next;
+                        if (poly != NULL)
+                        {
+                            printf(" + ");
+                        }
+                    }
+                    printf("\n");
+                }
+                
+                int main()
+                {
+                    int highest_pow,expo,coeff;
+                    printf("Enter the highest exponent: ");
+                    scanf("%d", &highest_pow);
+                
+                    subt *eq1 = NULL;
+                    subt *eq2 = NULL;
+                
+                    printf("Enter coefficients for polynomial 1:\n");
+                    for (int expo = highest_pow; expo >= 0; expo--)
+                    {
+                        printf("Coefficient for x^%d: ", expo);
+                        scanf("%d", &coeff);
+                        eq1 = get_eq(eq1, coeff, expo);
+                    }
+                
+                    printf("Enter coefficients for polynomial 2:\n");
+                    for (int expo = highest_pow; expo >= 0; expo--)
+                    {
+                        printf("Coefficient for x^%d: ", expo);
+                        scanf("%d", &coeff);
+                        eq2 = get_eq(eq2, coeff, expo);
+                    }
+                
+                    subt *result = subt_eq(eq1, eq2);
+                
+                    printf("Polynomial 1: ");
+                    print(eq1);
+                
+                    printf("Polynomial 2: ");
+                    print(eq2);
+                
+                    printf("Sum of polynomials: ");
+                    print(result);
+                
+                    return 0;
+                }
+        </code>
+    </pre>
+</body>
+</html>

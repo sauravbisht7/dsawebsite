@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+
+                // Function to print the adjacency matrix of a graph
+                void printAdjacencyMatrix(int matrix[][100], int vertices) {
+                    printf("Adjacency Matrix:\n");
+                    for (int i = 0; i < vertices; ++i) {
+                        for (int j = 0; j < vertices; ++j) {
+                            printf("%d ", matrix[i][j]);
+                        }
+                        printf("\n");
+                    }
+                }
+                
+                int main() {
+                    int vertices, edges;
+                
+                    // Input the number of vertices and edges
+                    printf("Enter the number of vertices: ");
+                    scanf("%d", &vertices);
+                    printf("Enter the number of edges: ");
+                    scanf("%d", &edges);
+                
+                    int adjacencyMatrix[100][100] = {0}; // Assuming a maximum of 100 vertices
+                
+                    // Input the edges and update the adjacency matrix
+                    printf("Enter the edges (vertex1 vertex2):\n");
+                    for (int i = 0; i < edges; ++i) {
+                        int vertex1, vertex2;
+                        scanf("%d %d", &vertex1, &vertex2);
+                
+                        // Assuming an undirected graph
+                        adjacencyMatrix[vertex1][vertex2] = 1;
+                        adjacencyMatrix[vertex2][vertex1] = 1;
+                    }
+                
+                    // Print the adjacency matrix
+                    printAdjacencyMatrix(adjacencyMatrix, vertices);
+                
+                    return 0;
+                }
+
+
+
+                output.
+                Enter the number of vertices: 4
+                Enter the number of edges: 3
+                Enter the edges (vertex1 vertex2):
+                0 1
+                1 2
+                2 3
+                
+                       
+        </code>
+    </pre>
+</body>
+</html>

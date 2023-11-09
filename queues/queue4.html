@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                
+                #define MAX_SIZE 100//storage 
+                #define STRING_LENGTH 100// how long can string be
+                
+                char queue[MAX_SIZE][STRING_LENGTH];
+                //declares a two-dimensional character array where you can store a collection of strings
+                // each row of the array represents a slot in the queue
+                //column represents the length of a string
+                int front = -1, rear = -1;
+                
+                // Function to check if the queue is empty
+                int is_empty() {
+                    return (front == -1);
+                }
+                
+                // Function to check if the queue is full
+                int is_full() {
+                    return (rear == MAX_SIZE - 1);
+                }
+                
+                // Function to insert (enqueue) a string into the queue
+                void insert(char str[]) {
+                    if (is_full()) {
+                        printf("Queue is full. Cannot insert.\n");
+                    } else {
+                        if (is_empty()) {
+                            front = rear = 0;
+                        } else {
+                            rear++;
+                        }
+                        strcpy(queue[rear], str);
+                        printf("Inserted: %s\n", str);
+                    }
+                }
+                
+                // Function to delete (dequeue) a string from the queue
+                void delete() {
+                    if (is_empty()) {
+                        printf("Queue is empty. Cannot delete.\n");
+                    } else {
+                        printf("Deleted: %s\n", queue[front]);
+                        if (front == rear) {
+                            front = rear = -1;
+                        } else {
+                            front++;
+                        }
+                    }
+                }
+                
+                // Function to peek at the front string of the queue
+                char* peek() {
+                    if (is_empty()) {
+                        printf("Queue is empty. Cannot peek.\n");
+                        return NULL;
+                    }
+                    return queue[front];
+                }
+                
+                // Function to display the menu and get the user's choice
+                int getMenuChoice() {
+                    int choice;
+                    printf("\nCHOOSE YOUR OPTION:\n");
+                    printf("1. Insert (Enqueue)\n");
+                    printf("2. Delete (Dequeue)\n");
+                    printf("3. Peek\n");
+                    printf("4. Exit\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &choice);
+                    return choice;
+                }
+                
+                int main() {
+                    int choice;
+                    char input[STRING_LENGTH];
+                
+                    while (1) {
+                        choice = getMenuChoice();
+                
+                        switch (choice) {
+                            case 1:
+                                printf("Enter a string to insert into the queue: ");
+                                scanf("%s", input);
+                                insert(input);
+                                break;
+                            case 2:
+                                delete();
+                                break;
+                            case 3:
+                                printf("Front element: %s\n", peek());
+                                break;
+                            case 4:
+                                exit(0);
+                            default:
+                                printf("Invalid choice. Please try again.\n");
+                        }
+                    }
+                
+                    return 0;
+                }          
+        </code>
+    </pre>
+</body>
+</html>
