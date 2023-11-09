@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                
+                // Definition of a binary search tree node
+                struct TreeNode {
+                    int data;
+                    struct TreeNode* left;
+                    struct TreeNode* right;
+                };
+                
+                // Function to create a new BST node
+                struct TreeNode* createNode(int data) {
+                    struct TreeNode* newNode = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+                    newNode->data = data;
+                    newNode->left = newNode->right = NULL;
+                    return newNode;
+                }
+                
+                // Function to insert a node into the BST
+                struct TreeNode* insert(struct TreeNode* root, int data) {
+                    if (root == NULL) {
+                        return createNode(data);
+                    }
+                
+                    if (data < root->data) {
+                        root->left = insert(root->left, data);
+                    } else if (data > root->data) {
+                        root->right = insert(root->right, data);
+                    }
+                
+                    return root;
+                }
+                
+                struct TreeNode* inord_predec(struct TreeNode* root)
+                {
+                    //in_predecessor means left subtree -> rightmost child
+                    root=root->left;//get in left sub tree
+                    while (root->right!=NULL)
+                    {
+                        root=root->right;//last right node in tree
+                    }
+                    printf("\nPredessor is %d\n",root->data);
+                    return root;//return 
+                }
+                
+                struct TreeNode* inord_success(struct TreeNode* root)
+                {
+                    //in_successor means right subtree -> leftmost child
+                    root=root->right;//get in right sub tree to find successor
+                    while (root->left!=NULL)
+                    {
+                        root=root->left;//last right node in tree
+                    }
+                    printf("\nSuccessor is %d\n",root->data);
+                    return root;//return 
+                }
+                
+                // Function to search for a value in the BST
+                int search(struct TreeNode* root, int key) {
+                    if (root == NULL) {
+                        return 0; // Not found
+                    }
+                    
+                    if (key == root->data) {
+                        return 1; // Found
+                    }
+                    
+                    if (key < root->data) {
+                        return search(root->left, key);
+                    }
+                    
+                    return search(root->right, key);
+                }
+                
+                // Function to perform an inorder traversal
+                void inorderTraversal(struct TreeNode* root) {
+                    if (root == NULL) {
+                        return;
+                    }
+                    inorderTraversal(root->left);
+                    printf("%d ", root->data);
+                    inorderTraversal(root->right);
+                }
+                
+                // Function to perform a preorder traversal
+                void preorderTraversal(struct TreeNode* root) {
+                    if (root == NULL) {
+                        return;
+                    }
+                    printf("%d ", root->data);
+                    preorderTraversal(root->left);
+                    preorderTraversal(root->right);
+                }
+                
+                // Function to perform a postorder traversal
+                void postorderTraversal(struct TreeNode* root) {
+                    if (root == NULL) {
+                        return;
+                    }
+                    postorderTraversal(root->left);
+                    postorderTraversal(root->right);
+                    printf("%d ", root->data);
+                }
+                
+                // Function to display the menu of choices
+                void displayMenu() {
+                    printf("Binary Search Tree Operations:\n");
+                    printf("1. Insert\n");
+                    printf("2. Predecessor\n");
+                    printf("3. Successor\n");
+                    printf("4. Preorder Traversal\n");
+                    printf("5. Inorder Traversal\n");
+                    printf("6. Postorder Traversal\n");
+                    printf("7. Exit\n");
+                    printf("Enter your choice: ");
+                }
+                
+                int main() {
+                    struct TreeNode* root = NULL;
+                    int choice, data;
+                
+                    do {
+                        displayMenu();
+                        scanf("%d", &choice);
+                
+                        switch (choice) {
+                            case 1:
+                                printf("Enter data to insert: ");
+                                scanf("%d", &data);
+                                if (search(root, data)) {
+                                    printf("Value already exists in the tree. Duplicates are not allowed.\n");
+                                } else {
+                                    root = insert(root, data);
+                                    printf("%d inserted into the tree.\n", data);
+                                }
+                                break;
+                            case 2:
+                                inord_predec(root);
+                                break;
+                            case 3:
+                                inord_success(root);
+                                break;
+                            case 4:
+                                printf("Preorder Traversal: ");
+                                preorderTraversal(root);
+                                printf("\n");
+                                break;
+                            case 5:
+                                printf("Inorder Traversal: ");
+                                inorderTraversal(root);
+                                printf("\n");
+                                break;
+                            case 6:
+                                printf("Postorder Traversal: ");
+                                postorderTraversal(root);
+                                printf("\n");
+                                break;
+                            case 7:
+                                // Exit
+                                break;
+                            default:
+                                printf("Invalid choice. Please try again.\n");
+                        }
+                    } while (choice != 7);
+                
+                    // Clean up and free memory (not shown in detail here)
+                
+                    return 0;
+                }        
+        </code>
+    </pre>
+</body>
+</html>

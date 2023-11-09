@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                
+                // Definition for a binary tree node
+                struct TreeNode {
+                    int val;
+                    struct TreeNode* left;
+                    struct TreeNode* right;
+                };
+                
+                // Function to create a new binary tree node
+                struct TreeNode* createNode(int val) {
+                    struct TreeNode* newNode = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+                    newNode->val = val;
+                    newNode->left = NULL;
+                    newNode->right = NULL;
+                    return newNode;
+                }
+                
+                // Function to print the right view of a binary tree
+                void print_rt(struct TreeNode* root, int level, int* maxLevel) {
+                    if (root == NULL) {
+                        return;
+                    }
+                
+                    // Check if the current level is greater than the maximum level seen so far
+                    if (level > *maxLevel) {
+                        // Print the value of the current node because it's the leftmost node at this level
+                        printf("%d ", root->val);
+                        *maxLevel = level;
+                    }
+                
+                    // Recursively call for the left and right subtrees
+                    print_rt(root->right, level + 1, maxLevel);
+                }
+                
+                void freespc(struct TreeNode* root) {
+                    if (root == NULL) {
+                        return;
+                    }
+                
+                    freespc(root->left);
+                    freespc(root->right);
+                    free(root);
+                }
+                
+                int main() {
+                    // Construct a sample binary tree
+                    struct TreeNode* root = createNode(1);
+                    root->left = createNode(2);
+                    root->right = createNode(3);
+                    root->left->left = createNode(4);
+                    root->left->right = createNode(5);
+                    root->left->left->left=createNode(10);
+                    root->right->left = createNode(6);
+                    root->right->right = createNode(7);
+                
+                    printf("Right View of Binary Tree: ");
+                    
+                    int maxLevel = 0; // Initialize the maximum level to 0
+                    print_rt(root, 1, &maxLevel);
+                
+                    printf("\n");
+                    freespc(root);
+                
+                    return 0;
+                }          
+        </code>
+    </pre>
+</body>
+</html>

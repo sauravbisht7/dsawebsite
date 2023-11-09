@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                
+                // Structure to represent a binary tree node
+                struct TreeNode {
+                    int data;
+                    struct TreeNode *left;
+                    struct TreeNode *right;
+                };
+                
+                // Structure to represent a dynamic array
+                struct DynamicArray {
+                    int *array;
+                    int size;
+                };
+                
+                // Function to create a new binary tree node
+                struct TreeNode *createNode(int data) {
+                    struct TreeNode *newNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+                    newNode->data = data;
+                    newNode->left = newNode->right = NULL;
+                    return newNode;
+                }
+                
+                // Function to perform inorder traversal of the binary tree and store elements in a dynamic array
+                void inorderTraversal(struct TreeNode *root, struct DynamicArray *array) {
+                    if (root != NULL) {
+                        inorderTraversal(root->left, array);
+                        array->array[array->size++] = root->data;
+                        inorderTraversal(root->right, array);
+                    }
+                }
+                
+                // Function to create a binary search tree from a sorted array
+                struct TreeNode *sortedArrayToBST(int *array, int start, int end) {
+                    if (start > end) {
+                        return NULL;
+                    }
+                
+                    int mid = (start + end) / 2;
+                    struct TreeNode *root = createNode(array[mid]);
+                
+                    root->left = sortedArrayToBST(array, start, mid - 1);
+                    root->right = sortedArrayToBST(array, mid + 1, end);
+                
+                    return root;
+                }
+                
+                // Function to convert a binary tree to a binary search tree
+                struct TreeNode *binaryTreeToBST(struct TreeNode *root) {
+                    // Step 1: Perform inorder traversal and store elements in a dynamic array
+                    struct DynamicArray array;
+                    array.array = (int *)malloc(sizeof(int) * 100); // Assuming a maximum of 100 elements
+                    array.size = 0;
+                
+                    inorderTraversal(root, &array);
+                
+                    // Step 2: Sort the elements in the array
+                    qsort(array.array, array.size, sizeof(int), compare);
+                
+                    // Step 3: Create a new binary search tree from the sorted array
+                    return sortedArrayToBST(array.array, 0, array.size - 1);
+                }
+                
+                // Function to compare two integers (required for qsort)
+                int compare(const void *a, const void *b) {
+                    return (*(int *)a - *(int *)b);
+                }
+                
+                // Function to perform inorder traversal of a binary tree
+                void inorderTraversalBST(struct TreeNode *root) {
+                    if (root != NULL) {
+                        inorderTraversalBST(root->left);
+                        printf("%d ", root->data);
+                        inorderTraversalBST(root->right);
+                    }
+                }
+                
+                // Function to free the memory allocated for a binary tree
+                void freeBinaryTree(struct TreeNode *root) {
+                    if (root != NULL) {
+                        freeBinaryTree(root->left);
+                        freeBinaryTree(root->right);
+                        free(root);
+                    }
+                }
+                
+                int main() {
+                    // Create a sample binary tree
+                    struct TreeNode *root = createNode(5);
+                    root->left = createNode(3);
+                    root->right = createNode(8);
+                    root->left->left = createNode(2);
+                    root->left->right = createNode(4);
+                
+                    // Display the original binary tree
+                    printf("Original Binary Tree (inorder traversal): ");
+                    inorderTraversalBST(root);
+                    printf("\n");
+                
+                    // Convert the binary tree to a binary search tree
+                    struct TreeNode *bstRoot = binaryTreeToBST(root);
+                
+                    // Display the converted binary search tree
+                    printf("Converted Binary Search Tree (inorder traversal): ");
+                    inorderTraversalBST(bstRoot);
+                    printf("\n");
+                
+                    // Free the allocated memory for the binary trees
+                    freeBinaryTree(root);
+                    freeBinaryTree(bstRoot);
+                
+                    return 0;
+                }
+                           
+        </code>
+    </pre>
+</body>
+</html>

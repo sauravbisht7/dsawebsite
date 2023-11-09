@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                
+                // Structure to represent a node in a binary tree
+                struct TreeNode {
+                    int data;
+                    struct TreeNode *left;
+                    struct TreeNode *right;
+                };
+                
+                // Function to create a new node in the binary tree
+                struct TreeNode *createNode(int data) {
+                    struct TreeNode *newNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+                    newNode->data = data;
+                    newNode->left = newNode->right = NULL;
+                    return newNode;
+                }
+                
+                // Function to create a strictly binary tree from user input
+                struct TreeNode *createStrictBinaryTree() {
+                    int data;
+                    printf("Enter the data for the root node: ");
+                    scanf("%d", &data);
+                
+                    struct TreeNode *root = createNode(data);
+                
+                    printf("Do you want to add a left child to the root node? (1 for yes, 0 for no): ");
+                    int addLeftChild;
+                    scanf("%d", &addLeftChild);
+                
+                    if (addLeftChild) {
+                        root->left = createStrictBinaryTree();
+                    }
+                
+                    printf("Do you want to add a right child to the root node? (1 for yes, 0 for no): ");
+                    int addRightChild;
+                    scanf("%d", &addRightChild);
+                
+                    if (addRightChild) {
+                        root->right = createStrictBinaryTree();
+                    }
+                
+                    return root;
+                }
+                
+                // Function to perform in-order traversal of a binary tree
+                void inOrderTraversal(struct TreeNode *root) {
+                    if (root != NULL) {
+                        inOrderTraversal(root->left);
+                        printf("%d ", root->data);
+                        inOrderTraversal(root->right);
+                    }
+                }
+                
+                // Function to free the memory allocated for a binary tree
+                void freeBinaryTree(struct TreeNode *root) {
+                    if (root != NULL) {
+                        freeBinaryTree(root->left);
+                        freeBinaryTree(root->right);
+                        free(root);
+                    }
+                }
+                
+                int main() {
+                    // Create a strictly binary tree based on user input
+                    struct TreeNode *root = createStrictBinaryTree();
+                
+                    // Display the in-order traversal of the created binary tree
+                    printf("In-order Traversal of the Strictly Binary Tree: ");
+                    inOrderTraversal(root);
+                    printf("\n");
+                
+                    // Free the allocated memory for the binary tree
+                    freeBinaryTree(root);
+                
+                    return 0;
+                }
+                              
+        </code>
+    </pre>
+</body>
+</html>

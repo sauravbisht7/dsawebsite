@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                
+                // Structure to represent a binary search tree node
+                struct TreeNode {
+                    int data;
+                    struct TreeNode *left;
+                    struct TreeNode *right;
+                };
+                
+                // Function to create a new binary search tree node
+                struct TreeNode *createNode(int data) {
+                    struct TreeNode *newNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+                    newNode->data = data;
+                    newNode->left = newNode->right = NULL;
+                    return newNode;
+                }
+                
+                // Function to find the index of the last element in post-order array within the given range
+                int findIndex(int postOrder[], int start, int end, int value) {
+                    for (int i = end; i >= start; i--) {
+                        if (postOrder[i] == value) {
+                            return i;
+                        }
+                    }
+                    return -1; // Not found
+                }
+                
+                // Function to construct a binary search tree from post-order traversal
+                struct TreeNode *constructBSTFromPostorder(int postOrder[], int n, int *postIndex, int min, int max) {
+                    // Base case: If all elements are processed
+                    if (*postIndex < 0) {
+                        return NULL;
+                    }
+                
+                    // Extract the current element
+                    int value = postOrder[*postIndex];
+                    (*postIndex)--;
+                
+                    // Check if the current element is within the valid range for a BST
+                    if (value < min || value > max) {
+                        return NULL;
+                    }
+                
+                    // Recursively construct right and left subtrees
+                    struct TreeNode *root = createNode(value);
+                    root->right = constructBSTFromPostorder(postOrder, n, postIndex, value, max);
+                    root->left = constructBSTFromPostorder(postOrder, n, postIndex, min, value);
+                
+                    return root;
+                }
+                
+                // Function to perform in-order traversal of a binary search tree
+                void inOrderTraversal(struct TreeNode *root) {
+                    if (root != NULL) {
+                        inOrderTraversal(root->left);
+                        printf("%d ", root->data);
+                        inOrderTraversal(root->right);
+                    }
+                }
+                
+                int main() {
+                    // Example post-order traversal of a BST
+                    int postOrder[] = {35, 30, 100, 80, 40};
+                    int n = sizeof(postOrder) / sizeof(postOrder[0]);
+                
+                    // Initialize index for post-order array
+                    int postIndex = n - 1;
+                
+                    // Construct the binary search tree from post-order traversal
+                    struct TreeNode *root = constructBSTFromPostorder(postOrder, n, &postIndex, INT_MIN, INT_MAX);
+                
+                    // Perform in-order traversal to verify the constructed BST
+                    printf("In-order Traversal of Constructed BST: ");
+                    inOrderTraversal(root);
+                    printf("\n");
+                
+                    // Free the allocated memory for the binary search tree
+                    free(root);
+                
+                    return 0;
+                }
+                           
+        </code>
+    </pre>
+</body>
+</html>

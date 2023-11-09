@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                
+                // Definition of a binary search tree node
+                struct TreeNode {
+                    int data;
+                    struct TreeNode* left;
+                    struct TreeNode* right;
+                };
+                
+                // Function to create a new BST node
+                struct TreeNode* createNode(int data) {
+                    struct TreeNode* newNode = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+                    newNode->data = data;
+                    newNode->left = newNode->right = NULL;
+                    return newNode;
+                }
+                
+                // Function to insert a node into the BST
+                struct TreeNode* insert(struct TreeNode* root, int data) {
+                    if (root == NULL) {
+                        return createNode(data);
+                    }
+                
+                    if (data < root->data) {
+                        root->left = insert(root->left, data);
+                    } else if (data > root->data) {
+                        root->right = insert(root->right, data);
+                    }
+                
+                    return root;
+                }
+                
+                // Function to find the minimum element in the BST
+                struct TreeNode* findMin(struct TreeNode* node) {
+                    while (node->left != NULL) {
+                        node = node->left;
+                    }
+                    return node;
+                }
+                struct TreeNode* inord_predec(struct TreeNode* root)
+                {
+                    //in_predecessor means left subtree -> rightmost child
+                    root=root->left;//get in left sub tree
+                    while (root->right!=NULL)
+                    {
+                        root=root->right;//last right node in tree
+                    }
+                    return root;//return 
+                    
+                }
+                // Function to delete a node from the BST
+                struct TreeNode* deleteNode(struct TreeNode* root, int value) {
+                    struct TreeNode* in_pre;
+                    if (root == NULL) {
+                        return root;
+                    }
+                    if (root->left==NULL && root->right==NULL)
+                    {
+                        free(root);//as it is single and can be called as leaf node
+                        return NULL;
+                    }
+                        //find where value is
+                    if (value < root->data) {
+                        root->left= deleteNode(root->left, value);//need to set value so that  we can catch
+                        //the returned value
+                        //otherwise it will be error
+                    } else if (value > root->data) {
+                        root->right= deleteNode(root->right, value);
+                    } else {
+                        in_pre=inord_predec(root);
+                        root->data=in_pre->data;//override the value
+                        root->left=deleteNode(root->left,in_pre->data);
+                    }
+                    return root;
+                }
+                
+                // Function to search for a value in the BST
+                int search(struct TreeNode* root, int key) {
+                    if (root == NULL) {
+                        return 0; // Not found
+                    }
+                    
+                    if (key == root->data) {
+                        return 1; // Found
+                    }
+                    
+                    if (key < root->data) {
+                        return search(root->left, key);
+                    }
+                    
+                    return search(root->right, key);
+                }
+                
+                // Function to perform an inorder traversal
+                void inorderTraversal(struct TreeNode* root) {
+                    if (root == NULL) {
+                        return;
+                    }
+                    inorderTraversal(root->left);
+                    printf("%d ", root->data);
+                    inorderTraversal(root->right);
+                }
+                
+                // Function to perform a preorder traversal
+                void preorderTraversal(struct TreeNode* root) {
+                    if (root == NULL) {
+                        return;
+                    }
+                    printf("%d ", root->data);
+                    preorderTraversal(root->left);
+                    preorderTraversal(root->right);
+                }
+                
+                // Function to perform a postorder traversal
+                void postorderTraversal(struct TreeNode* root) {
+                    if (root == NULL) {
+                        return;
+                    }
+                    postorderTraversal(root->left);
+                    postorderTraversal(root->right);
+                    printf("%d ", root->data);
+                }
+                
+                // Function to display the menu of choices
+                void displayMenu() {
+                    printf("Binary Search Tree Operations:\n");
+                    printf("1. Insert\n");
+                    printf("2. Delete\n");
+                    printf("3. Search\n");
+                    printf("4. Preorder Traversal\n");
+                    printf("5. Inorder Traversal\n");
+                    printf("6. Postorder Traversal\n");
+                    printf("7. Find Minimum Element\n");
+                    printf("8. Exit\n");
+                    printf("Enter your choice: ");
+                }
+                
+                int main() {
+                    struct TreeNode* root = NULL;
+                    int choice, data;
+                
+                    do {
+                        displayMenu();
+                        scanf("%d", &choice);
+                
+                        switch (choice) {
+                            case 1:
+                                printf("Enter data to insert: ");
+                                scanf("%d", &data);
+                                if (search(root, data)) {
+                                    printf("Value already exists in the tree. Duplicates are not allowed.\n");
+                                } else {
+                                    root = insert(root, data);
+                                    printf("%d inserted into the tree.\n", data);
+                                }
+                                break;
+                            case 2:
+                                printf("Enter data to delete: ");
+                                scanf("%d", &data);
+                                if (search(root, data)) {
+                                    root = deleteNode(root, data);
+                                    printf("%d deleted from the tree.\n", data);
+                                } else {
+                                    printf("%d not found in the tree.\n", data);
+                                }
+                                break;
+                            case 3:
+                                printf("Enter data to search: ");
+                                scanf("%d", &data);
+                                if (search(root, data)) {
+                                    printf("%d is found in the tree.\n", data);
+                                } else {
+                                    printf("%d is not found in the tree.\n", data);
+                                }
+                                break;
+                            case 4:
+                                printf("Preorder Traversal: ");
+                                preorderTraversal(root);
+                                printf("\n");
+                                break;
+                            case 5:
+                                printf("Inorder Traversal: ");
+                                inorderTraversal(root);
+                                printf("\n");
+                                break;
+                            case 6:
+                                printf("Postorder Traversal: ");
+                                postorderTraversal(root);
+                                printf("\n");
+                                break;
+                            case 7:
+                                if (root == NULL) {
+                                    printf("Tree is empty.\n");
+                                } else {
+                                    struct TreeNode* minNode = findMin(root);
+                                    printf("Minimum element: %d\n", minNode->data);
+                                }
+                                break;
+                            case 8:
+                                // Exit
+                                break;
+                            default:
+                                printf("Invalid choice. Please try again.\n");
+                        }
+                    } while (choice != 8);
+                
+                    // Clean up and free memory (not shown in detail here)
+                
+                    return 0;
+                }            
+        </code>
+    </pre>
+</body>
+</html>

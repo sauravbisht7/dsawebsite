@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < stdlib.h>
+                
+                // Definition of a binary tree node
+                struct TreeNode {
+                    int data;
+                    struct TreeNode* left;
+                    struct TreeNode* right;
+                };
+                
+                // Function to create a new binary tree node
+                struct TreeNode* createNode(int data) {
+                    struct TreeNode* newNode = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+                    newNode->data = data;
+                    newNode->left = NULL;
+                    newNode->right = NULL;
+                    return newNode;
+                }
+                
+                // Function to find the index of a value in an inorder array
+                int findIndex(int inorder[], int start, int end, int value) {
+                    for (int i = start; i <= end; i++) {
+                        if (inorder[i] == value) {
+                            return i;
+                        }
+                    }
+                    return -1; // Not found
+                }
+                
+                // Function to construct a binary tree from postorder and inorder traversals
+                struct TreeNode* buildTree(int postorder[], int inorder[], int inStart, int inEnd, int* postIndex) {
+                    // postIndex = pointer to the current index in the postorder traversal.
+                    // inStart: start index for the current subtree in the inorder traversal
+                    // inEnd: end index for the current subtree in the inorder traversal.
+                    if (inStart > inEnd) {
+                        return NULL;
+                    }
+                
+                    // Create a new node using the current element from the postorder array
+                    struct TreeNode* newNode = createNode(postorder[*postIndex]);
+                    (*postIndex)--; // Decrease the postIndex since we are moving from right to left in postorder.
+                
+                    if (inStart == inEnd) {
+                        return newNode;
+                    }
+                
+                    // Find the index of this element in the inorder array
+                    int inIndex = findIndex(inorder, inStart, inEnd, newNode->data);
+                
+                    // Recursively build the right and left subtrees (notice the order)
+                    newNode->right = buildTree(postorder, inorder, inIndex + 1, inEnd, postIndex);
+                    newNode->left = buildTree(postorder, inorder, inStart, inIndex - 1, postIndex);
+                
+                    return newNode;
+                }
+                
+                // Function to print a binary tree in the specified format
+                void printTree(struct TreeNode* node) {
+                    if (node == NULL) {
+                        printf("null");
+                        return;
+                    }
+                
+                    printf("[%d,", node->data);
+                    printTree(node->left);
+                    printf(",");
+                    printTree(node->right);
+                    printf("]");
+                }
+                
+                int main() {
+                    int n;
+                    printf("Enter the number of nodes: ");
+                    scanf("%d", &n);
+                
+                    int postorder[n];
+                    int inorder[n];
+                
+                    printf("Enter the postorder traversal: ");
+                    for (int i = 0; i < n; i++) {
+                        scanf("%d", &postorder[i]);
+                    }
+                
+                    printf("Enter the inorder traversal: ");
+                    for (int i = 0; i < n; i++) {
+                        scanf("%d", &inorder[i]);
+                    }
+                
+                    int postIndex = n - 1; // Start from the last element in postorder
+                
+                    struct TreeNode* root = buildTree(postorder, inorder, 0, n - 1, &postIndex);
+                
+                    printf("Binary Tree in the specified format: ");
+                    printTree(root);
+                
+                    return 0;
+                }              
+        </code>
+    </pre>
+</body>
+</html>
