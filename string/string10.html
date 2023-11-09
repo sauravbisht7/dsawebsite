@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                #include < stdlib.h>
+                char specific(char word[], int find)
+                {
+                    int length = 0, i = 0;
+                    char ch='1';
+                    for (i = 0; word[i] != '\0'; i++)
+                    {
+                        length++;
+                    }
+                    if (find > length)
+                    {
+                        return ch;
+                    }
+                    ch = word[find-1];
+                    return ch;
+                }
+                void main()
+                {
+                    char Sentence[100], bnd[5], ch;
+                    int bound = 0;
+                    puts("Enter the text : ");
+                    gets(Sentence);
+                    puts("Enter the bound number to show what character is there : ");
+                    gets(bnd);
+                    bound = atoi(bnd);
+                    ch = specific(Sentence, bound);
+                    if (ch == '1')
+                    {
+                        printf("\nWarnin!! input error");
+                    }
+                    else
+                    {
+                        printf("\nWord at given index is  : %c", ch);
+                    }
+                }
+        </code>
+    </pre>
+</body>
+</html>

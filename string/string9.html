@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                void copy(char word[], char cpy[])
+                {
+                    int i = 0;
+                    for (i = 0; word[i] != '\0'; i++)
+                    {
+                        cpy[i] = word[i];
+                    }
+                }
+                void main()
+                {
+                    char Sentence[100], coppied[100];
+                    puts("Enter the text : ");
+                    gets(Sentence);
+                    copy(Sentence, coppied);
+                    printf("Coppied sentence can be seen as follow : %s", coppied);
+                }
+        </code>
+    </pre>
+</body>
+</html>

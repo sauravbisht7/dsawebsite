@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include< conio.h>
+                int main() {
+                    char firstString[100];
+                    char secondString[100];
+                    char concatenatedString[200]; // Assuming the concatenated string won't exceed 200 characters
+                
+                    printf("Enter the first string: ");
+                    gets(firstString);
+                
+                    printf("Enter the second string: ");
+                    gets(secondString);
+                
+                    int i, j;
+                
+                    // Copy the characters from the first string to the concatenated string
+                    for (i = 0; firstString[i] != '\0'; i++) {
+                        concatenatedString[i] = firstString[i];
+                    }
+                
+                    // Copy the characters from the second string to the concatenated string
+                    for (j = 0; secondString[j] != '\0'; j++) {
+                        concatenatedString[i + j] = secondString[j];
+                    }
+                
+                    // Null-terminate the concatenated string
+                    concatenatedString[i + j] = '\0';
+                
+                    // Display the concatenated result
+                    printf("Concatenated string: %s\n", concatenatedString);
+                
+                    return 0;
+                }
+        </code>
+    </pre>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                void ascending(char word[])
+                {
+                    int length = 0, i = 0,j;
+                    char temp;
+                    for (i = 0; word[i] != '\0'; i++)
+                    {
+                        length++;
+                    }
+                
+                      for(i=1;i< length;i++)
+                    for(j=0;j< length-i;j++)
+                    if(word[j]>word[j+1])
+                    {
+                      temp=word[j];
+                      word[j] = word[j+1];
+                      word[j+1]=temp;
+                    }
+                
+                    for (i = 0; i < length; i++)
+                    {
+                        printf("%c", word[i]);
+                    }
+                }
+                void main()
+                {
+                    char Sentence1[100];
+                    puts("Enter the text : ");
+                    gets(Sentence1);
+                    ascending(Sentence1);
+                }
+        </code>
+    </pre>
+</body>
+</html>

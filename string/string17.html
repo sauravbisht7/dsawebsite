@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                int vowelcount(char word[])
+                {
+                    int i = 0, vowel_count = 0; // taking zero becaz there might be a possibility that no vowels exist.
+                    while (word[i] != '\0')
+                    {
+                        //for lower case checking
+                        if (word[i] == 'a' || word[i] == 'e' || word[i] == 'i' || word[i] == 'o' || word[i] == 'u')
+                        {
+                            vowel_count++;
+                        }
+                        //for upper case checking
+                        if (word[i] == 'A' || word[i] == 'E' || word[i] == 'I' || word[i] == 'O' || word[i] == 'U')
+                        {
+                            vowel_count++;
+                        }
+                        i++;
+                    }
+                    return vowel_count;
+                }
+                void main()
+                {
+                    char Sentence1[100];
+                    int comp = 0;
+                    puts("Enter the text : ");
+                    gets(Sentence1);
+                    comp = vowelcount(Sentence1);
+                    printf("Number of vowels found are: %d", comp);
+                }
+        </code>
+    </pre>
+</body>
+</html>

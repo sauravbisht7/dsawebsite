@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include< stdio.h>
+                #include< string.h>
+                // Function to print all sub strings
+                void subString(char str[]) 
+                {
+                    int n=0,i,len;
+                    for ( i = 0; str[i] !='\0'; i++)
+                    {
+                        n++; //length 
+                    }
+                    printf("Length of string : -%d\n",n);
+                    // first loop pick starting point 
+                    for ( len = 1; len <= n; len++) 
+                    { 
+                        // Pick ending point. considering all char to right as ending point
+                        for ( i = 0; i <= n - len; i++) 
+                        {
+                            // Print characters from current
+                            // starting point to current ending
+                            // point. 
+                            int j = i + len - 1;		 
+                            for (int k = i; k <= j; k++) 
+                                printf("%c",str[k]);
+                            
+                            printf("\n");
+                        }
+                    }
+                }
+                
+                int main() 
+                {
+                    char str[10];
+                    puts("Enter string :");
+                    gets(str);
+                    subString(str);
+                    return 0;
+                }
+        </code>
+    </pre>
+</body>
+</html>

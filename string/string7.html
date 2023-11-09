@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                int compare(char word[],char word2[])
+                {
+                    int comp = -1;
+                     int length2=0,length1 = 0, i = 0,incr=0;
+                    for (i = 0; word[i] != '\0'; i++)
+                    {
+                        length1++;
+                    }
+                    for (i = 0; word2[i] != '\0'; i++)
+                    {
+                        length2++;
+                    }
+                    if (length1!=length2)
+                    {
+                        return comp;
+                    }
+                    for ( i = 0; i < length1; i++)
+                    {
+                        if (word[i]==word2[i])
+                        {
+                            incr++;
+                        }
+                        
+                    }
+                    if (incr==length1)
+                    {
+                        comp=incr;
+                        return comp;
+                    }
+                    else{
+                        return -1;
+                    }
+                    
+                }
+                void main()
+                {
+                    char Sentence1[100],Sentence2[100];
+                    int comp=0;
+                    puts("Enter the text : ");
+                    gets(Sentence1);
+                    puts("Enter the text2 : ");
+                    gets(Sentence2);
+                    comp=compare(Sentence1,Sentence2);
+                    if (comp==-1)
+                    {
+                        printf("\nSentence are differnt.------!");
+                    }
+                    else{
+                        printf("\nSentences are same with given length = %d",comp);
+                    }
+                }
+        </code>
+    </pre>
+</body>
+</html>

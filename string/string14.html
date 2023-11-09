@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                void compare(char word[], char word2[])
+                {
+                    int length2 = 0, length1 = 0, i = 0, rec = 0;
+                    for (i = 0; word[i] != '\0'; i++)
+                    {
+                        length1++;
+                    }
+                    for (i = 0; word2[i] != '\0'; i++)
+                    {
+                        length2++;
+                    }
+                    if (length1 != length2)
+                    {
+                        printf("\nEven the lengths of strings do not match");
+                    }
+                    for (i = 0; i < length1; i++)
+                    {
+                        if (word[i] != word2[i])
+                        {
+                            printf("\nWord maismath found : ");
+                            printf("\n %c - %c ", word[i], word2[i]);
+                            printf("\nat position %d", i);
+                            printf("\nDifference between ASCII value is : %d",word[i]-word2[i]);
+                            rec++;
+                        }
+                    }
+                    if (length1 > length2)
+                    {
+                        while (word[rec] != '\0')
+                        {
+                            printf("\nLength is longer than other string. Words are: ");
+                            printf("\n %c ", word[rec]);
+                            rec++;
+                        }
+                    }
+                    if (length2 > length1)
+                    {
+                        while (word2[rec] != '\0')
+                        {
+                            printf("\nLength is longer than other string. Words are: ");
+                            printf("\n %c ", word[rec]);
+                            rec++;
+                        }
+                    }
+                }
+                void main()
+                {
+                    char Sentence1[100], Sentence2[100];
+                    puts("Enter the text : ");
+                    gets(Sentence1);
+                    puts("Enter the text2 : ");
+                    gets(Sentence2);
+                    compare(Sentence1, Sentence2);
+                }
+        </code>
+    </pre>
+</body>
+</html>

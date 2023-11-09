@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                void count(char word[])
+                {
+                    int i = 0, char_count = 0, word_count = 0, space_count = 0;
+                    // ASCII of a to z 97 to 112
+                    // ASCII of A to Z 65 to 90
+                    while (word[i] != '\0')
+                    {
+                        if (word[i]!= ' ')//as characters are a to z . , or anything.
+                        {
+                            char_count++;
+                        }
+                        if (word[i] == 32)
+                        {
+                            space_count++;
+                        }
+                
+                        if (word[i] == 32 && word[i+1] !=32)
+                        {
+                            word_count++;
+                        }
+                        
+                        i++;
+                    }
+                    printf ("\n%d",char_count);
+                    printf("\n%d",space_count);
+                    printf("\n%d",word_count+1);
+                }
+                void main()
+                {
+                    char Sentence1[100];
+                    puts("Enter the text : ");
+                    gets(Sentence1);
+                    count(Sentence1);
+                    //printf("Number of vowels found are: %d", comp);
+                }
+        </code>
+    </pre>
+</body>
+</html>

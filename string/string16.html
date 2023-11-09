@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                int findch(char word[],char ch)
+                {
+                    int i=0,index=-1;
+                    if (word[i]==ch)
+                    {
+                        index=i;
+                        i++;
+                        return index;
+                    }
+                    return index;
+                }
+                void main()
+                {
+                    char Sentence1[100],find;
+                    int comp=0;
+                    puts("Enter the text : ");
+                    gets(Sentence1);
+                    puts("Enter the character you want to search : ");
+                    find=getche();
+                    comp=findch(Sentence1,find);
+                    if (comp==-1)
+                    {
+                        printf("\nCharacter not found in given array");
+                    }
+                    else{
+                        printf("\nCharacter found at index : %d",comp+1);
+                    }
+                }
+        </code>
+    </pre>
+</body>
+</html>

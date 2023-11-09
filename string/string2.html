@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include< stdio.h>
+                #include< conio.h>
+                void main()
+                {
+                   char string[10];
+                   int i;
+                   puts("Enter a string : ");
+                   gets(string);
+                   for ( i = 0; string[i]!='\0'; i++)
+                   {
+                        if (string[i]>='A' && string[i]<='Z')
+                        {
+                            string[i]=string[i]+32;
+                            //ASCII of a to z 97 to 112
+                            //ASCII of A to Z 65 to 90
+                        }
+                        
+                   }
+                         printf("String in lower case : %s",string);
+                
+                   //for ( i = 0; string[i]!='\0'; i++)
+                   //{
+                     //printf("%c",string[i]);
+                   //}
+                   
+                }
+        </code>
+    </pre>
+</body>
+</html>

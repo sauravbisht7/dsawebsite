@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                
+                int find_second(const char *input) {
+                    int len = strlen(input);
+                    int wordCount = 0;
+                    int starting_indx = -1;
+                
+                    for (int i = 0; i < len; i++) {
+                        if (input[i] != ' ' && input[i] != '\t' && input[i] != '\n') {
+                            //checks if the current character is not a space, tab, or newline character. 
+                            //If it's not it means we've encountered a non-whitespace(any kind of sepration) character,
+                            //which could be the start of a word.
+                            if (wordCount == 1) {
+                                //meaning we have already read th efirst word
+                                //and we will update the starting index to the current location of i
+                                //wnd break the program becaz we got what we needed
+                                starting_indx = i;
+                                break; // found the start of the second word
+                            }
+                            wordCount++;//------>. 
+                            // If we haven't found the first word yet, we increment the wordCount. 
+                            //This helps us to keep track of how many words we have traversed so far
+                            while (i < len && input[i] != ' ' && input[i] != '\t' && input[i] != '\n') {
+                                i++; // Skip the rest of the current word
+                                //loop is used to skip the rest of the current word. we don't need that
+                                //It continues as long as we are within the length of string and the characters
+                                //are not whitespace characters, in other words -> they are words.
+                                //this ensures that we skip the entire word and move to the next non-whitespace character.
+                            }
+                        }
+                    }
+                
+                    return starting_indx;
+                }
+                
+                int main() {
+                    char input[1000]; // Maximum input length, adjust as needed
+                    printf("Enter a string: ");
+                    fgets(input, sizeof(input), stdin);
+                
+                    int startIndex = find_second(input);
+                
+                    if (startIndex != -1) {
+                        printf("Start index of the second word: %d\n", startIndex+1);
+                    } else {
+                        printf("The input does not contain a second word.\n");
+                    }
+                
+                    return 0;
+                }
+        </code>
+    </pre>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+
+                float con_to_float(const char *str) {
+                    float result = 0.0; //initialization
+                    float decimalFactor = 0.1;// it will multiply each time and provide us the space to add
+                    //the next element in its updated position
+                    int sign = 1;//assume it is positive
+                    int i = 0;
+                
+                    // Handle the sign
+                    if (str[i] == '-') {
+                        sign = -1;
+                        i++;
+                    }
+                
+                    // Parse the integer part
+                    while (str[i] >= '0' && str[i] <= '9') {
+                        result = result * 10.0 + (str[i] - '0');
+                        i++;
+                    }
+                
+                    // Check for the decimal point
+                    if (str[i] == '.') {
+                        i++;
+                    }
+                
+                    // Parse the fractional part
+                    while (str[i] >= '0' && str[i] <= '9') {
+                        result = result + (str[i] - '0') * decimalFactor;
+                        decimalFactor *= 0.1;
+                        i++;
+                    }
+                    //explanation:- 
+                
+                    // use decimalFactor to keep track of the position of the decimal place. 
+                    // Initially, decimalFactor is 0.1 (to handle the first decimal place), 
+                    // and for each digit encountered, 
+                    // we reduce decimalFactor by a factor of 10.
+                    //ex = 0.1 0.01 0.001 and so on
+                
+                    // Apply the sign
+                    result *= sign;
+                    //this will make it either positive or negative
+                
+                    return result;
+                }
+                
+                int main() {
+                    char str[100]; 
+                
+                    printf("Enter a number as a string: ");
+                    scanf("%s", str); // user input
+                
+                    float ptr = con_to_float(str);
+                
+                    printf("String: %s\n", str);
+                    printf("After converting to float: %f\n", ptr);
+                
+                    return 0;
+                }
+        </code>
+    </pre>
+</body>
+</html>

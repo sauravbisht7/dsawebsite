@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                
+                int main() {
+                    char input[200];
+                    int i,align,padding,text_lth;
+                
+                    printf("Enter a string: ");
+                    gets(input);
+                
+                    printf("Which alignment do you want??\n");
+                    printf("1. Left\n");
+                    printf("2. Center\n");
+                    printf("3. Right\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &align);
+                
+                    text_lth = strlen(input);
+                
+                    if (align == 1) {
+                        // Left alignment
+                        printf("%s", input);//no change
+                    } else if (align == 2) {
+                        // Center alignment
+                        padding = (120 - text_lth) / 2; // Assuming a line width of 120 characters
+                        for (i = 0; i < padding; i++) {
+                            printf(" ");
+                        }
+                        printf("%s", input);
+                    } else if (align == 3) {
+                        // Right alignment
+                        padding = 120 - text_lth; // Assuming a line width of 120 characters
+                        for (i = 0; i < padding; i++) {
+                            printf(" ");
+                        }
+                        printf("%s", input);
+                    } else {
+                        printf("Invalid choice. Please choose 1, 2, or 3 for alignment.\n");
+                    }
+                
+                    return 0;
+                }
+        </code>
+    </pre>
+</body>
+</html>

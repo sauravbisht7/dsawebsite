@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                int len(char word[])
+                {
+                       int length = 0, i = 0;
+                    for (i = 0; word[i] != '\0'; i++)
+                    {
+                        length++;
+                    }
+                    return length;
+                }
+                void main()
+                {
+                    char Sentence[100];
+                    int lenght;
+                    puts("Enter the text : ");
+                    gets(Sentence);
+                    lenght=len(Sentence);
+                    printf("Length is : %d",lenght);
+                }
+        </code>
+    </pre>
+</body>
+</html>

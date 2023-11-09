@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;">
+    <pre>
+        <code style="color:white">
+            #include < stdio.h>
+                #include < string.h>
+                
+                char *trimSpaces(char *str) {
+                    int start = 0;
+                    //to manually find string : ----->
+                    // int i,n,len=0;
+                    // for ( i = 0; str[i] !='\0'; i++)
+                    // {
+                    //     n++; //length 
+                    // }
+                    int end = strlen(str) - 1;
+                
+                    // Trim leading spaces
+                    while (str[start] == ' ' || str[start] == '\t' || str[start] == '\n') {
+                        start++;
+                    }
+                
+                    // If the string is all spaces, return an empty string
+                    if (start > end) {
+                        str[0] = '\0';
+                        return str;
+                    }
+                
+                    // Trim trailing spaces space tabs or new line
+                    while (str[end] == ' ' || str[end] == '\t' || str[end] == '\n') {
+                        end--;
+                    }
+                
+                    // Move the null-terminator to the new end
+                    str[end + 1] = '\0';
+                    //this will indicate where sting ends
+                
+                    // Shift the string to the beginning if any of the spaces
+                    //has been cut out
+                    if (start > 0) {//meaning start is not on zero as it should be
+                        for (int i = 0; i <= end - start; i++) {
+                            str[i] = str[i + start];
+                        }
+                        str[end - start + 1] = '\0'; //last index is null
+                    }
+                
+                    return str;
+                }
+                
+                void main() {
+                    char input[1000];
+                    printf("Enter a string: ");
+                    gets(input);
+                
+                    char *trimmed = trimSpaces(input);
+                
+                    printf("Trimmed string: %s\n", trimmed);
+                }
+        </code>
+    </pre>
+</body>
+</html>
